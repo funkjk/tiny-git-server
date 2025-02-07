@@ -1,0 +1,26 @@
+{
+  "name": "tiny-git-server-examples",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p tsconfig.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cls-hooked": "^4.2.2",
+    "dotenv": "^16.4.7",
+    "isomorphic-git": "file:../../isomorphic-git",
+    "node": "^23.7.0",
+    "pg": "^8.13.1",
+    "sequelize": "^6.37.5",
+    "tiny-git-server": "file:../../dist",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/cls-hooked": "^4.3.9",
+    "@types/node": "^22.13.0"
+  }
+}

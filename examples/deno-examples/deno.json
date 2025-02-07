@@ -1,0 +1,17 @@
+{
+    "nodeModulesDir": "auto",
+    "unstable": ["sloppy-imports"],
+    "imports": {
+        "dotenv": "npm:dotenv@^16.4.7",
+        "dotenv/config": "npm:dotenv@^16.4.7/config",
+        "sequelize":"npm:sequelize@6.37.5",
+        "winston":"npm:winston",
+        "stream":"node:stream",
+        "http":"node:http",
+        "cls-hooked":"npm:cls-hooked",
+        "tiny-git-server":"../../dist",
+        "tiny-git-server/server":"../../dist/server",
+        "tiny-git-server/util/logging":"../../dist/util/logging",
+        "tiny-git-server/server/isomorphic-git-proxy":"../../dist/server/isomorphic-git-proxy"
+    }
+}

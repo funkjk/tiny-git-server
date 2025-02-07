@@ -1,0 +1,34 @@
+{
+  "name": "tiny-git-server",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "examples": "cd examples/node-examples && nodemon",
+    "build": "tsc -p tsconfig.json"
+  },
+  "exports": {
+    "./server": "./server",
+    "./fs": "./fs"
+  },
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "@types/cls-hooked": "^4.3.9",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.5",
+    "@types/sha.js": "^2.4.4",
+    "cls-hooked": "^4.2.2",
+    "isomorphic-git": "^1.29.0",
+    "pg": "^8.13.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.5",
+    "sequelize-cli": "^6.6.2"
+  },
+  "dependencies": {
+    "diff3": "^0.0.4",
+    "sha.js": "^2.4.11"
+  }
+}
