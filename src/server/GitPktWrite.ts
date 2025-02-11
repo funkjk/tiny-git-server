@@ -36,7 +36,7 @@ function number2Buffer4Byte(num: number) {
     ]);
 }
 
-function createObjectHeader(type: number, size: number) :Buffer{
+function createObjectHeader(type: number, size: number): Buffer {
     let currentSize = size
     const byteArray: number[] = []
     if (currentSize >> 4 >= 1) {

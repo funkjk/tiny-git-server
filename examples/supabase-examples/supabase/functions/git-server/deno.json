@@ -1,0 +1,28 @@
+{
+  "imports": {
+    "dotenv": "npm:dotenv@^16.4.7",
+    "dotenv/config": "npm:dotenv@^16.4.7/config",
+    "sequelize":"npm:sequelize@6.37.5",
+    "sha.js/sha1.js":"npm:sha.js/sha1.js",
+    "winston":"npm:winston",
+    "diff3":"npm:diff3",
+    "pify":"npm:pify",
+    "buffer":"node:buffer",
+    "ignore":"npm:ignore",
+    "pg":"npm:pg",
+    "async-lock":"npm:async-lock",
+    "pako":"npm:pako@^1.0.10",
+    "clean-git-ref":"npm:clean-git-ref",
+    "crc-32":"npm:crc-32",
+    "zlib":"node:zlib",
+    "path":"node:path",
+    "path-browserify":"node:path",
+    "stream":"node:stream",
+    "http":"node:http",
+    "fs":"node:fs",
+    "cls-hooked":"npm:cls-hooked",
+    "isomorphic-git":"../../../../../isomorphic-git/index.js",
+    "isomorphic-git/internal-apis":"../../../../../isomorphic-git/internal-apis.js",
+    "tiny-git-server/server":"../../../../../dist/index.js"
+  }
+}

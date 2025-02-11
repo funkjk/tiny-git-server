@@ -1,4 +1,4 @@
-import { setIsomorphicGit,setIsomorphicGitInternal } from 'tiny-git-server/server/isomorphic-git-proxy';
+import { setIsomorphicGit,setIsomorphicGitInternal } from 'tiny-git-server';
 
 //@ts-ignore
 // import * as igit from "isomorphic-git/internal-apis.cjs"

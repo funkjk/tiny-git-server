@@ -64,3 +64,5 @@ npm run build && cp -r ./dist/* ./examples/deno-examples/node_modules/tiny-git-s
 
 deno compile --allow-all --unstable-detect-cjs --no-check  server.ts
 
+supabase start # start the supabase stack
+supabase functions serve # start the Functions watcher

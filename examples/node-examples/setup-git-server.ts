@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http'
-import { GitServer } from 'tiny-git-server/server';
+import { GitServer } from 'tiny-git-server';
 import { gitServerLogging } from './create-logger';
 import { sqlfs } from './setup-git-fs';
 

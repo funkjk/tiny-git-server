@@ -1,5 +1,5 @@
 
-import { convertLogMessageToString, LogLevel } from "tiny-git-server/util/logging"
+import { convertLogMessageToString, LogLevel } from 'tiny-git-server';
 import winston from "winston"
 
 const LEVELS_BY_CATEGORY: any = {
