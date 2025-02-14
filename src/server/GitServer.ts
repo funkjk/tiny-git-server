@@ -186,18 +186,6 @@ export class GitServer {
                 lineBuffer = await read()
             }
             this.logging(LogLevel.DEBUG, "_gitRecievePack capabilities", capabilities)
-            this.logging(LogLevel.DEBUG, "_gitRecievePack triplets", triplets)
-            for (let triplet of triplets) {
-                if ("0000000000000000000000000000000000000000" != triplet.oldoid) {
-                    const currentOid = await igit.GitRefManager.resolve({ fs, gitdir, ref: triplet.fullRef })
-                    if (currentOid !== triplet.oldoid) {
-                        responseBuffer.push(igit.GitPktLine.encode(`ng ${triplet.fullRef} conflict\n`))
-                        break;
-                    }
-                }
-                await igit.GitRefManager.writeRef({ fs, gitdir, ref: triplet.fullRef, value: triplet.oid })
-                responseBuffer.push(igit.GitPktLine.encode(`ok ${triplet.fullRef}\n`))
-            }
 
             const getExternalRefDelta = async function (oid: string) {
                 const { type, object } = await igit._readObject({ fs, gitdir, oid })
@@ -211,6 +199,20 @@ export class GitServer {
                 const obj = await packedData.read({ oid })
                 await git.writeObject({ fs, gitdir, type: obj.type, object: obj.object })
             }
+
+            this.logging(LogLevel.DEBUG, "_gitRecievePack triplets", triplets)
+            for (let triplet of triplets) {
+                if ("0000000000000000000000000000000000000000" != triplet.oldoid) {
+                    const currentOid = await igit.GitRefManager.resolve({ fs, gitdir, ref: triplet.fullRef })
+                    if (currentOid !== triplet.oldoid) {
+                        responseBuffer.push(igit.GitPktLine.encode(`ng ${triplet.fullRef} conflict\n`))
+                        break;
+                    }
+                }
+                await igit.GitRefManager.writeRef({ fs, gitdir, ref: triplet.fullRef, value: triplet.oid })
+                responseBuffer.push(igit.GitPktLine.encode(`ok ${triplet.fullRef}\n`))
+            }
+
             responseBuffer.push(igit.GitPktLine.encode(`unpack ok\n`))
         }
 
