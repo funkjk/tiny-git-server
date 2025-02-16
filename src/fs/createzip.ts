@@ -19,7 +19,7 @@ async function toZip(fs:any, dir:string, folder:any) {
             await toZip(fs, filename, childFolder)
         } else {
             const data = await fs._readFile(filename)
-            folder.addFile(fname, data)
+            folder.file(fname, data)
         }
     }
 }

@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http'
-import { GitServer } from 'tiny-git-server';
+import { createZip, GitServer } from 'tiny-git-server';
 import { gitServerLogging } from './create-logger';
 import { sqlfs } from './setup-git-fs';
 
@@ -18,6 +18,16 @@ export const serveGitServer = async function (req: IncomingMessage, res: ServerR
         const repo = url.searchParams.get("repo")
         await gitServer.init(repo!)
         res.writeHead(201)
+        res.end()
+    } else if (pathname == "/download") {
+        const repo = url.searchParams.get("repo")
+        const zipped = await createZip(fs, ROOT_DIR + "/" + repo)
+        const data = await zipped.generateAsync({ type: "uint8array" });
+        const filename = `${repo}_${new Date().getMilliseconds()}.zip`
+        res.writeHead(200, "", {
+            "Content-Disposition": `attachment; filename=\"${filename}\"`
+        })
+        res.write(Buffer.from(data))
         res.end()
     } else {
         await gitServer.serve(req, res)
