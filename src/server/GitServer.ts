@@ -30,18 +30,21 @@ export class GitServer {
     capabilities: string[]
     agentName: string
     logging: Logging;
-    constructor(args: { fs: any, rootDir: string, logging?: Logging }) {
+    constructor(args: { fs: any, rootDir: string, logging?: Logging, capabilities?: string[] }) {
         this.fs = new igit.FileSystem(args.fs)
         this.rootDir = args.rootDir
         this.logging = args.logging ?? DefaultLogging
         this.capabilities = [
             // 'multi_ack',
             // 'thin-pack','side-band','side-band-64k','ofs-delta','shallow','deepen-since',
-            // 'deepen-not','deepen-relative','no-progress','include-tag',,
+            // 'deepen-not','deepen-relative','no-progress','include-tag',
             // 'ofs-delta',
-            // 'side-band-64k'
-            'multi_ack_detailed',
-            'no-done'
+            // "atomic",
+            // "quiet",
+            // 'side-band-64k',
+            // 'multi_ack_detailed',
+            // 'no-done',
+            ...(args.capabilities) ? args.capabilities : []
         ]
         this.agentName = "tiny-git"
     }
@@ -138,7 +141,7 @@ export class GitServer {
         }
 
         const uploadObjectList = await _listUploadObjects({ fs, gitdir, dir:gitdir, wantOids: target.wants, haveOids: target.haves })
-
+        
         const objectsEntries: ObjectEntry[] = []
         for (let uploadObject of uploadObjectList) {
             objectsEntries.push({
@@ -216,7 +219,7 @@ export class GitServer {
             responseBuffer.push(igit.GitPktLine.encode(`unpack ok\n`))
         }
 
-        if (capabilities.includes("side-band-64k")) {
+        if (capabilities.includes("side-band-64k") && capabilities.includes("no-done")) {
             const response = Buffer.concat(responseBuffer.map(
                 e => encodeSideBand(PackfileChannel, e)));
             return response
