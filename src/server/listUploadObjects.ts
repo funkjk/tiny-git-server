@@ -1,4 +1,4 @@
-import * as igit from "./isomorphic-git-proxy/isomofic-git-internal-proxy"
+import * as igit from "../util/isomorphic-git-proxy/isomofic-git-internal-proxy"
 
 export interface UploadObjectsList {
   oid: string, type: string, object: any

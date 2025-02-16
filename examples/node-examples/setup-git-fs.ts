@@ -1,5 +1,5 @@
 
-import { GitFile, GitFileDbDefinition, SQLFS } from 'tiny-git-server';
+import { SequelizeGitFile, SequelizeGitFileDbDefinition, SequelizeSQLFS } from 'tiny-git-server';
 
 import { DataTypes, Sequelize } from 'sequelize'
 import cls from 'cls-hooked'
@@ -8,19 +8,20 @@ import { sqlfsLogging, sqlLogger } from './create-logger';
 export const namespace = cls.createNamespace('sequelize-transaction');
 
 export const sequelize = new Sequelize(
-    process.env.DATABASE_URL!, {
-    dialect: 'postgres',
-    logging(sql, _timing) {
-        sqlLogger.debug(sql)
-    },
-}
+    process.env.DATABASE_URL!,
+    {
+        dialect: 'postgres',
+        logging(sql, _timing) {
+            sqlLogger.debug(sql)
+        },
+    }
 )
 
-class RepositoryIdFileClass extends GitFile {
+class RepositoryIdFileClass extends SequelizeGitFile {
     declare repositoryId: string;
 }
 
-export const sqlfs = new SQLFS({
+export const sqlfs = new SequelizeSQLFS({
     logging: sqlfsLogging, namespace, sequelize,
     gitFileDbDefinition: {
         repositoryId: {
@@ -28,7 +29,7 @@ export const sqlfs = new SQLFS({
             field: "repository_id",
             allowNull: false
         },
-        ...GitFileDbDefinition
+        ...SequelizeGitFileDbDefinition
     },
     FileClass: RepositoryIdFileClass
 })

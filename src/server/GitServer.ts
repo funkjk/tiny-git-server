@@ -1,8 +1,8 @@
 import { IncomingMessage, ServerResponse } from "http";
 
 
-import * as igit from "./isomorphic-git-proxy/isomofic-git-internal-proxy"
-import * as git from "./isomorphic-git-proxy/isomofic-git-proxy";
+import * as igit from "../util/isomorphic-git-proxy/isomofic-git-internal-proxy"
+import * as git from "../util/isomorphic-git-proxy/isomofic-git-proxy";
 import * as is from "./identity-request";
 import { GitPktWrite, ObjectEntry } from "./GitPktWrite";
 import { Readable } from "stream";
