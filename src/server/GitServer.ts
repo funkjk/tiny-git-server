@@ -253,9 +253,6 @@ function writeRefsAdResponse(args: { service: string, capabilities: string[], re
     stream.push(igit.GitPktLine.encode(`# service=${args.service}\n`))
     stream.push("0000")
     let capabilities = [...args.capabilities]
-    if (args.service === is.GitService.GIT_RECEIVE_PACK) {
-        capabilities.push('side-band-64k')
-    }
     const syms = Object.entries(args.symrefs).map(e => `symref=${e[0]}:${e[1]}`).join(" ")
     let caps = `\x00${capabilities.join(' ')} ${syms} object-format=sha1 agent=${args.agent}`
 
