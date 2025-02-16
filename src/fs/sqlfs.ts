@@ -48,7 +48,7 @@ export abstract class SQLFS {
             data: bufferContent,
             fileType: GitFileType.FILE,
             fileSize,
-            ...this._createCDateMDate(),
+            ...this._createCTimeMTime(),
             ...this._setAdditionalProperties()
         }
         await this._upsert(row)
@@ -74,7 +74,7 @@ export abstract class SQLFS {
         const row = {
             filepath: dir,
             fileType: GitFileType.DIR,
-            ...this._createCDateMDate(),
+            ...this._createCTimeMTime(),
             ...this._setAdditionalProperties()
         }
         await this._upsert(row)
@@ -128,10 +128,10 @@ export abstract class SQLFS {
     _setAdditionalProperties(): WhereOptions<any> {
         return {}
     }
-    _createCDateMDate(): any {
+    _createCTimeMTime(): any {
         return {
-            cdate: new Date(),
-            mdate: new Date(),
+            ctime: new Date(),
+            mtime: new Date(),
         }
     }
     abstract _upsert(row: SqlRow): Promise<void>

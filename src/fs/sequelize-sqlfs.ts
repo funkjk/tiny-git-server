@@ -80,7 +80,7 @@ export class SequelizeSQLFS extends SQLFS{
             sequelize: options.sequelize
         })
     }
-    _createCDateMDate() {
+    _createCTimeMTime() {
         // dont create ctime/mtime because use Sequelize facility
         return {}
     }
