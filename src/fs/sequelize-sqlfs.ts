@@ -93,7 +93,7 @@ export class SequelizeSQLFS extends SQLFS{
     async _delete(filepath: string, prematch: boolean): Promise<void> {
         await this.FileClass.destroy({
             where: {
-                filepath: prematch ? { [Op.like]: `${filepath}%` } : filepath,
+                filepath: prematch ? { [Op.like]: `${filepath}/%` } : filepath,
                 ...this._getAdditionalCondition()
             }
         })

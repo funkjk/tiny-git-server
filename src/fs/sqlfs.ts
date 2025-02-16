@@ -2,6 +2,7 @@ import { DataTypes, Op, Sequelize, Transaction, WhereOptions } from "sequelize"
 import { Model, Optional } from 'sequelize';
 import { DefaultLogging, Logging, LogLevel } from "../util/logging";
 import cls from 'cls-hooked'
+import { resolve } from "path";
 
 export enum GitFileType {
     DIR = "DIR",
@@ -14,6 +15,9 @@ export abstract class SQLFS {
         this.logging = options.logging ?? DefaultLogging
     }
     async readFile(filepath: string, encoding: any): Promise<any> {
+        if (!filepath) {
+            return new Promise(resolve => resolve(1))
+        }
         try {
             const resultData = await this._selectData(filepath)
             if (resultData) {
