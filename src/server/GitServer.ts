@@ -44,7 +44,7 @@ export class GitServer {
             // 'side-band-64k',
             // 'multi_ack_detailed',
             // 'no-done',
-            ...(args.capabilities) ? args.capabilities : []
+            ...(args.capabilities) ? args.capabilities : ['no-done', 'side-band-64k']
         ]
         this.agentName = "tiny-git"
     }
@@ -140,8 +140,8 @@ export class GitServer {
             ackResponseBuffer = Buffer.concat([ackResponseBuffer, readyBuffer, lastAckBuffer])
         }
 
-        const uploadObjectList = await _listUploadObjects({ fs, gitdir, dir:gitdir, wantOids: target.wants, haveOids: target.haves })
-        
+        const uploadObjectList = await _listUploadObjects({ fs, gitdir, dir: gitdir, wantOids: target.wants, haveOids: target.haves })
+
         const objectsEntries: ObjectEntry[] = []
         for (let uploadObject of uploadObjectList) {
             objectsEntries.push({

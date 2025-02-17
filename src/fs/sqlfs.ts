@@ -1,8 +1,4 @@
-import { DataTypes, Op, Sequelize, Transaction, WhereOptions } from "sequelize"
-import { Model, Optional } from 'sequelize';
 import { DefaultLogging, Logging, LogLevel } from "../util/logging";
-import cls from 'cls-hooked'
-import { resolve } from "path";
 
 export enum GitFileType {
     DIR = "DIR",
@@ -122,10 +118,10 @@ export abstract class SQLFS {
     async symlink(_target: string, _filepath: string): Promise<void> {
         throw new Error("symlink not implemented");
     }
-    _getAdditionalCondition(): WhereOptions<any> {
+    _getAdditionalCondition(): any {
         return {}
     }
-    _setAdditionalProperties(): WhereOptions<any> {
+    _setAdditionalProperties(): any {
         return {}
     }
     _createCTimeMTime(): any {

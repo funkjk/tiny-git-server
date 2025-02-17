@@ -23,7 +23,7 @@ export const serveGitServer = async function (req: IncomingMessage, res: ServerR
         const repo = url.searchParams.get("repo")
         const zipped = await createZip(fs, ROOT_DIR + "/" + repo)
         const data = await zipped.generateAsync({ type: "uint8array" });
-        const filename = `${repo}_${new Date().getMilliseconds()}.zip`
+        const filename = `${repo}_${new Date().toISOString()}.zip`
         res.writeHead(200, "", {
             "Content-Disposition": `attachment; filename=\"${filename}\"`
         })

@@ -86,3 +86,7 @@ set GIT_TRACE_PACKET=true
 
 
 00bdcdac2d980d13c4df45663386dc4ffdb2188edfea refs/heads/masterreport-status report-status-v2 delete-refs side-band-64k quiet atomic ofs-delta object-format=sha1 agent=git/2.29.2.windows.2
+
+http://localhost:3000/download?repo=test_sql_20250201 
+
+curl -X POST http://localhost:3000/init?repo=test_sql_20250201
