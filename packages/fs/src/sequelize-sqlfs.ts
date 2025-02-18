@@ -1,7 +1,7 @@
 
 import { DataTypes, Op, Sequelize, Transaction, WhereOptions } from "sequelize"
 import { Model, Optional } from 'sequelize';
-import { Logging } from "../util/logging";
+import { Logging } from "@tiny-git-server/util";
 import cls from 'cls-hooked'
 import { GitFileType, SQLFS, SqlMeta } from "./sqlfs";
 

@@ -1,6 +1,6 @@
 // https://shafiul.github.io/gitbook/7_the_packfile.html
-import zlib from "zlib"
-//@ts-ignore
+import * as zlib from "zlib"
+// @ts-ignore
 import Hash from 'sha.js/sha1.js'
 
 export type ObjectEntry = { buffer: Buffer, type: number }

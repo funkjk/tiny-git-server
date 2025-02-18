@@ -1,42 +1,15 @@
 {
-  "name": "tiny-git-server",
-  "version": "1.0.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "examples": "cd examples/node-examples && nodemon",
-    "build": "rollup -c",
-    "build_tsc": "tsc -p tsconfig.json"
-  },
-  "exports": {
-    "./server": "./server",
-    "./server/isomorphic-git-proxy": "./server/isomorphic-git-proxy",
-    "./fs": "./fs"
-  },
-  "author": "",
-  "license": "MIT",
-  "description": "",
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {},
   "devDependencies": {
-    "@rollup/plugin-typescript": "^12.1.2",
-    "@types/cls-hooked": "^4.3.9",
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.10.5",
-    "@types/sha.js": "^2.4.4",
-    "cls-hooked": "^4.2.2",
-    "isomorphic-git": "^1.29.0",
-    "pg": "^8.13.1",
-    "pg-hstore": "^2.3.4",
-    "rollup": "^4.34.6",
-    "rollup-plugin-postcss": "^4.0.2",
-    "sequelize": "^6.37.5",
-    "sequelize-cli": "^6.6.2",
-    "tslib": "^2.8.1"
+    "lerna": "^8.1.9"
   },
-  "dependencies": {
-    "diff3": "^0.0.4",
-    "jszip": "^3.10.1",
-    "sha.js": "^2.4.11"
+  "scripts": {
+    "build":"lerna run build",
+    "dev":"cd examples/node-examples && nodemon"
   }
 }
