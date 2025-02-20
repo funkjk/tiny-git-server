@@ -44,7 +44,7 @@ export class GitServer {
             // 'side-band-64k',
             // 'multi_ack_detailed',
             // 'no-done',
-            ...(args.capabilities) ? args.capabilities : ['no-done', 'side-band-64k']
+            // ...(args.capabilities) ? args.capabilities : ['no-done', 'side-band-64k']
         ]
         this.agentName = "tiny-git"
     }

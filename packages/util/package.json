@@ -4,7 +4,6 @@
   "description": "> TODO: description",
   "license": "ISC",
   "main":"dist/index.js",
-  "type": "module",
   "scripts":{
     "build": "rollup -c ../../rollup.config.js --bundleConfigAsCjs",
     "test": "node ./__tests__/util.test.js"
