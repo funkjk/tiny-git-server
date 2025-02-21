@@ -1,13 +1,13 @@
 import { IncomingMessage, ServerResponse } from "http";
 
 
-import * as igit from "../util/isomorphic-git-proxy/isomofic-git-internal-proxy"
-import * as git from "../util/isomorphic-git-proxy/isomofic-git-proxy";
+import * as igit from "@tiny-git-server/util"
+import * as git from "@tiny-git-server/util"
 import * as is from "./identity-request";
 import { GitPktWrite, ObjectEntry } from "./GitPktWrite";
 import { Readable } from "stream";
 import { _listUploadObjects } from "./listUploadObjects";
-import { DefaultLogging, LogLevel, Logging } from "../util/logging";
+import { DefaultLogging, LogLevel, Logging } from "@tiny-git-server/util"
 import { ErrorType, GitServerError } from "./GitServerError";
 
 const TYPE_NUMBDER: any = {}
@@ -44,7 +44,7 @@ export class GitServer {
             // 'side-band-64k',
             // 'multi_ack_detailed',
             // 'no-done',
-            ...(args.capabilities) ? args.capabilities : ['no-done', 'side-band-64k']
+            // ...(args.capabilities) ? args.capabilities : ['no-done', 'side-band-64k']
         ]
         this.agentName = "tiny-git"
     }

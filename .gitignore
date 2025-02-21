@@ -1,3 +1,4 @@
-node_modules
-dist
-examples/repos
+node_modules/
+packages/*/dist/
+packages/fs/dist
+lerna-debug.log

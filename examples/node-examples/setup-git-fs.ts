@@ -1,5 +1,5 @@
 
-import { SequelizeGitFile, SequelizeGitFileDbDefinition, SequelizeSQLFS } from 'tiny-git-server';
+import { SequelizeGitFile, SequelizeGitFileDbDefinition, SequelizeSQLFS } from '../../packages/fs/src';
 
 import { DataTypes, Sequelize } from 'sequelize'
 import cls from 'cls-hooked'
@@ -34,10 +34,10 @@ export const sqlfs = new SequelizeSQLFS({
     FileClass: RepositoryIdFileClass
 })
 sqlfs._getAdditionalCondition = function () {
-    return { "repositoryId": "efe30e56-3e48-b8ef-5500-5941fb97ebe1" }
-    // return {}
+    const repositoryId = this.namespace?.get("repositoryId")
+    return { repositoryId }
 }
 sqlfs._setAdditionalProperties = function () {
-    return { "repositoryId": "efe30e56-3e48-b8ef-5500-5941fb97ebe1" }
-    // return {}
+    const repositoryId = this.namespace?.get("repositoryId")
+    return { repositoryId }
 }
