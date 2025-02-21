@@ -5,7 +5,7 @@ import * as igit from "isomorphic-git/internal-apis"
 import * as git from "isomorphic-git"
 
 // //@ts-ignore
-// import * as igit from "../../isomorphic-git/internal-apis.cjs"
+// import * as igit from "../../isomorphic-git/internal-apis.js"
 // //@ts-ignore
 // import * as git from "../../isomorphic-git/index.cjs"
 
