@@ -1,6 +1,6 @@
 {
   "name": "@tiny-git-server/fs",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "> TODO: description",
   "license": "ISC",
   "scripts": {
@@ -27,9 +27,9 @@
     "url": "https://github.com/funkjk/tiny-git-server/issues"
   },
   "dependencies": {
-    "@tiny-git-server/util": "^0.0.0",
-    "cls-hooked": "^4.2.2",
+    "@tiny-git-server/util": "^0.1.0",
     "@types/cls-hooked": "^4.3.9",
+    "cls-hooked": "^4.2.2",
     "jszip": "^3.10.1",
     "sequelize": "^6.37.5"
   }
