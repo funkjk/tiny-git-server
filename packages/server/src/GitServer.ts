@@ -48,7 +48,7 @@ export class GitServer {
         ]
         this.agentName = "tiny-git"
     }
-    async init(repoName: string) {
+    async init(repoName: string, options?: any) {
         if (!repoName || repoName.length == 0) {
             throw new GitServerError(ErrorType.INVALID_PARAMETER, `invalid name length. repository [${repoName}]`)
         }
@@ -62,6 +62,11 @@ export class GitServer {
         }
         await git.init({ fs: this.fs, bare: true, gitdir, defaultBranch: "main" })
         this.logging(LogLevel.DEBUG, `repository [${repoName}] created`)
+        if (options && options.addReadme) {
+            // await this.fs.writeFile(this.rootDir + "/README.md", "")
+            // await git.add({ fs: this.fs, gitdir, filepath: "README.md" })
+            // await git.commit
+        }
     }
 
     async handle(gitRequest: is.GitRequest) {
@@ -168,6 +173,7 @@ export class GitServer {
         let capabilities: string[] = []
 
         for await (let buff of gitRequest.requestData) {
+            this.logging(LogLevel.SILLY, "requestBuff:" + buff.toString("hex"))
             const stream = Readable.from(buff)
             // dont read direct by streamReader because cannot receive PACK line
             const read = await igit.GitPktLine.streamReader(stream)
