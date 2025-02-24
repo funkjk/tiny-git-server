@@ -89,6 +89,7 @@ export class GitServer {
             throw new GitServerError(ErrorType.NOT_FOUND, `repository [${gitRequest.repoName}] not found`)
         }
         const responseBuffer = await handlers[gitRequest.type].call(this, gitRequest)
+        this.logging(LogLevel.SILLY, "response buff:" + responseBuffer.toString("hex"))
         return responseBuffer
     }
     async serve(req: IncomingMessage, res: ServerResponse) {
@@ -112,6 +113,14 @@ export class GitServer {
         for (const ref of refsKeys) {
             let key = `refs/${ref}`
             refs[key] = await igit.GitRefManager.resolve({ fs, gitdir, ref: key })
+        }
+        let head = (await this.fs._readFile(`${gitdir}/HEAD`)).toString()
+        if (head.startsWith("ref: ")) {
+            // remove last new line
+            head = head.substring("ref: ".length, head.length - 1)
+        }
+        if (refsKeys.length > 0) {
+            refs["HEAD"] = await igit.GitRefManager.resolve({ fs, gitdir, ref: head })
         }
         const resStreams = writeRefsAdResponse({
             service: serviceType[gitRequest.type],

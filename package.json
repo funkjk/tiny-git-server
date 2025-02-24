@@ -17,7 +17,7 @@
     "typescript": "^5.7.3"
   },
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-modules  jest",
+    "test": "cd examples/node-examples && jest",
     "build": "lerna run build",
     "dev": "cd examples/node-examples && nodemon"
   },

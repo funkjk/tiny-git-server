@@ -8,7 +8,7 @@ import { sqlfsLogging, sqlLogger } from './create-logger';
 export const namespace = cls.createNamespace('sequelize-transaction');
 
 export const sequelize = new Sequelize(
-    process.env.DATABASE_URL??"postgres://postgres:postgres@localhost:5433/testdb01",
+    process.env.DATABASE_URL!,
     {
         dialect: 'postgres',
         logging(sql, _timing) {
@@ -34,10 +34,12 @@ export const sqlfs = new SequelizeSQLFS({
     FileClass: RepositoryIdFileClass
 })
 sqlfs._getAdditionalCondition = function () {
-    const repositoryId = this.namespace?.get("repositoryId")
+    // const repositoryId = this.namespace?.get("repositoryId")
+    const repositoryId = "efe30e56-3e48-b8ef-5500-5941fb97ebe1"
     return { repositoryId }
 }
 sqlfs._setAdditionalProperties = function () {
-    const repositoryId = this.namespace?.get("repositoryId")
+    // const repositoryId = this.namespace?.get("repositoryId")
+    const repositoryId = "efe30e56-3e48-b8ef-5500-5941fb97ebe1"
     return { repositoryId }
 }
