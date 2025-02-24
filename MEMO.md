@@ -89,4 +89,7 @@ set GIT_TRACE_PACKET=true
 
 http://localhost:3000/download?repo=test_sql_20250201 
 
-curl -X POST http://localhost:3000/init?repo=test_sql_20250201
+curl -v -X POST "http://localhost:3000/init?repo=test_sql_20250201"
+
+git clone http://localhost:3000/test_sql_20250201 .
+

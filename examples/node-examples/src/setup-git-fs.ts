@@ -1,5 +1,5 @@
 
-import { SequelizeGitFile, SequelizeGitFileDbDefinition, SequelizeSQLFS } from '../../packages/fs/src';
+import { SequelizeGitFile, SequelizeGitFileDbDefinition, SequelizeSQLFS } from '../../../packages/fs/src';
 
 import { DataTypes, Sequelize } from 'sequelize'
 import cls from 'cls-hooked'
@@ -8,7 +8,7 @@ import { sqlfsLogging, sqlLogger } from './create-logger';
 export const namespace = cls.createNamespace('sequelize-transaction');
 
 export const sequelize = new Sequelize(
-    process.env.DATABASE_URL!,
+    process.env.DATABASE_URL??"postgres://postgres:postgres@localhost:5433/testdb01",
     {
         dialect: 'postgres',
         logging(sql, _timing) {

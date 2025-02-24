@@ -4,12 +4,24 @@
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {},
   "devDependencies": {
-    "lerna": "^8.1.9"
+    "@types/jest": "^29.5.14",
+    "async-lock": "^1.4.1",
+    "crc-32": "^1.2.2",
+    "crc32": "^0.2.2",
+    "jest": "^29.7.0",
+    "lerna": "^8.1.9",
+    "pako": "^1.0.10",
+    "path-browserify": "^1.0.1",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.7.3"
   },
   "scripts": {
-    "build":"lerna run build",
-    "dev":"cd examples/node-examples && nodemon"
+    "test": "NODE_OPTIONS=--experimental-modules  jest",
+    "build": "lerna run build",
+    "dev": "cd examples/node-examples && nodemon"
+  },
+  "dependencies": {
+    "rollup-plugin-del": "^1.0.1"
   }
 }

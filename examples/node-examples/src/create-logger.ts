@@ -2,11 +2,14 @@
 import { convertLogMessageToString, LogLevel } from '@tiny-git-server/util';
 import winston from "winston"
 
+const debugLogEnable = process.env.DEBUG_LOG === "true"
+
 const LEVELS_BY_CATEGORY: any = {
     "main": "info",
-    // "sql": "debug",
-    // "sqlfs": "debug",
-    // "GitServer":"debug"
+    "sql": debugLogEnable ? "debug" :undefined,
+    "sqlfs":  debugLogEnable ? "debug" :undefined,
+    "GitServer": debugLogEnable ? "debug" :undefined,
+    // "GitServer": "silly",
 }
 
 export function createLogger(args?: { category?: string }) {
@@ -17,7 +20,8 @@ export function createLogger(args?: { category?: string }) {
     const level = LEVELS_BY_CATEGORY[category] ?? "info"
     winston.loggers.add(category, {
         transports: [
-            new winston.transports.Console({ level })
+            new winston.transports.Console({ level }),
+            new winston.transports.File({ filename: 'dist/log.txt' }),
         ],
         format: winston.format.combine(
             winston.format.timestamp({

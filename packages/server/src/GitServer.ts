@@ -65,7 +65,12 @@ export class GitServer {
         if (options && options.addReadme) {
             // await this.fs.writeFile(this.rootDir + "/README.md", "")
             // await git.add({ fs: this.fs, gitdir, filepath: "README.md" })
-            // await git.commit
+            // await git.commit({
+            //     fs: this.fs, gitdir, message: "init", author: {
+            //         email: "init@example.com",
+            //         name: "init"
+            //     }
+            // })
         }
     }
 

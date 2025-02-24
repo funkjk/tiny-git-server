@@ -1,15 +1,15 @@
 import 'dotenv/config';
 
 
-import './isomorphic-git-proxy'
+import './src/isomorphic-git-proxy'
 
 import http, { IncomingMessage, ServerResponse } from 'http'
-import { createLogger } from './create-logger';
-import { serveGitServer } from './setup-git-server';
+import { createLogger } from './src/create-logger';
+import { serveGitServer } from './src/setup-git-server';
 
 const logger = createLogger()
 
-const server = http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
+export const server = http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
 	const url = new URL("http://localhost" + req.url!)
 	logger.info(req.method + " " + url.pathname + "?" + url.search)
 	await serveGitServer(req, res)
