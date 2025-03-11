@@ -1,46 +1,54 @@
 import { startServer } from "../src/setup-test"
+import dotenv from 'dotenv'
+const config = dotenv.config().parsed;
+
 import * as git from "isomorphic-git"
 import http from "isomorphic-git/http/node"
 import fs from 'fs';
 import { namespace, sequelize, sqlfs } from "../src/setup-git-fs";
 
-const LOCAL_FS_PATH = "./dist"
+const LOCAL_FS_PATH = "dist"
 
 const author = {
     name: "test",
     email: "test@example.com"
 }
-test("receive_pack", async () => {
+
+test("receive_pack_test", async () => {
     await http.request({ url: `http://localhost:3000/init?repo=${getRepoName()}`, method: "POST" })
     await git.clone({ ...getDefaultParams() })
-    const branch = await git.branch({ ...getDefaultParams(), ref: "main" })
-    console.log("branch", branch)
+    console.log("after init")
     fs.writeFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/edit/test.txt", "testdata")
     await git.add({ ...getDefaultParams(), filepath: "test.txt" })
     await git.commit({ ...getDefaultParams(), message: "add test", author })
-    await git.push({ ...getDefaultParams(), force: true })
+    try {
+        await git.push({ ...getDefaultParams(), force: true })
+        console.log("after push")
+    } catch (e) {
+        console.error(e)
+    }
     await git.clone({
         ...getDefaultParams(),
-        dir: LOCAL_FS_PATH + "/" + getRepoName() + "/read"
+        // url:"http://localhost:54321/functions/v1/git-server/funakigitserver_local",
+        // url: "https://github.com/funkjk/testgitserver.git",
+        // url:"https://github.com/funkjk/testgitserver_empty.git",
+        // fs:sqlfs,
+        dir: LOCAL_FS_PATH + "/" + getRepoName() + "/read",
     })
 
-})
 
-test("init_with_addReadme", async () => {
+    console.log("after clone read")
 
-    await http.request({ url: `http://localhost:3000/init?repo=${getRepoName()}&addReadme=true`, method: "POST" })
-    await git.clone(getDefaultParams())
+}, 30 * 1000)
 
-})
 
 let server: any
 beforeEach(async () => {
     await cleanup();
 });
 beforeAll(async () => {
-    if (!fs.existsSync(LOCAL_FS_PATH)) {
-        fs.mkdirSync(LOCAL_FS_PATH)
-    }
+    fs.rmSync(LOCAL_FS_PATH, { recursive: true, force: true })
+    fs.mkdirSync(LOCAL_FS_PATH)
     server = await startServer()
 });
 afterAll(async () => {
@@ -61,6 +69,7 @@ function getRepoName() {
 function getDefaultParams() {
     return {
         fs,
+        // fs:sqlfs,
         remoteRef: "main",
         dir: LOCAL_FS_PATH + "/" + getRepoName() + "/edit",
         url: `http://localhost:3000/${getRepoName()}`,

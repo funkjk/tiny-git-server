@@ -66,4 +66,5 @@ const gitServe = async function (req: IncomingMessage, res: ServerResponse) {
     } else {
         await gitServer.serve(req, res)
     }
+    logger.info("END:" + url)
 }

@@ -38,12 +38,11 @@ export class GitServer {
             // 'multi_ack',
             // 'thin-pack','side-band','side-band-64k','ofs-delta','shallow','deepen-since',
             // 'deepen-not','deepen-relative','no-progress','include-tag',
-            // 'ofs-delta',
-            // "atomic",
-            // "quiet",
-            // 'side-band-64k',
+            // 'multi_ack_detailed', 'allow-tip-sha1-in-want', 'allow-reachable-sha1-in-want', 
+            // 'no-done', 'filter'
+            'side-band-64k',
+            'no-done',
             // 'multi_ack_detailed',
-            // 'no-done',
             // ...(args.capabilities) ? args.capabilities : ['no-done', 'side-band-64k']
         ]
         this.agentName = "tiny-git"
@@ -136,7 +135,10 @@ export class GitServer {
 
         let target
         let loopIdx = 0
-        const strm = Readable.from(gitRequest.requestData)
+        const buff = await stream2buffer(gitRequest.requestData)
+        const strm = Readable.from(buff)
+        this.logging(LogLevel.SILLY, "request buff: " + buff.toString("hex"))
+
         target = await igit.parseUploadPackRequest(strm)
         loopIdx++
         const haveAckList: string[] = []
@@ -176,7 +178,7 @@ export class GitServer {
             return responseBuffer
         } else {
             const nak = "0008NAK\n"
-            const responseBuffer = Buffer.concat([ackResponseBuffer, Buffer.from(nak), packedStream])
+            const responseBuffer = Buffer.concat([Buffer.from(nak), encodeSideBand(PackfileChannel, packedStream), Buffer.from("0000")])
             return responseBuffer
         }
     }
@@ -198,12 +200,10 @@ export class GitServer {
             while (lineBuffer !== null) {
                 readedLength += lineBuffer.length + READ_SIZE_BYTE
                 const lineStr = lineBuffer.toString("utf8")
-                const [oldoid, oid, fullRef] = lineStr.split("\x00")[0].split(" ")
-                if (lineStr.split("\x00")[1]) {
-                    const capStr = lineStr.split("\x00")[1].split(" ")
-                    if (capStr.length >= 4) {
-                        capabilities = capStr.slice(1, capStr.length - 2)
-                    }
+                const lineData = lineStr.replace("\x00", "").split(" ")
+                const [oldoid, oid, fullRef] = lineData
+                if (lineData.slice(3, lineData.length - 1).length > 0) {
+                    capabilities = lineData.slice(3, lineData.length - 1)
                 }
                 triplets.push({ oldoid, oid, fullRef })
                 lineBuffer = await read()
@@ -239,8 +239,8 @@ export class GitServer {
             responseBuffer.push(igit.GitPktLine.encode(`unpack ok\n`))
         }
 
-        if (capabilities.includes("side-band-64k") && capabilities.includes("no-done")) {
-            const response = Buffer.concat(responseBuffer.map(
+        if (capabilities.includes("side-band-64k")) {
+            const response = Buffer.concat(responseBuffer.reverse().map(
                 e => encodeSideBand(PackfileChannel, e)));
             return response
         } else {
@@ -274,8 +274,10 @@ function writeRefsAdResponse(args: { service: string, capabilities: string[], re
     stream.push("0000")
     let capabilities = [...args.capabilities]
     const syms = Object.entries(args.symrefs).map(e => `symref=${e[0]}:${e[1]}`).join(" ")
-    let caps = `\x00${capabilities.join(' ')} ${syms} object-format=sha1 agent=${args.agent}`
-
+    let caps = `\x00${capabilities.join(' ')} ${syms}object-format=sha1 agent=${args.agent}`
+    if (Object.entries(args.refs).length == 0) {
+        args.refs["capabilities^{}"] = "0000000000000000000000000000000000000000"
+    }
     for (const [key, value] of Object.entries(args.refs)) {
         stream.push(igit.GitPktLine.encode(`${value} ${key}${caps}\n`))
         // add only first ref line
@@ -284,3 +286,12 @@ function writeRefsAdResponse(args: { service: string, capabilities: string[], re
 
     return Buffer.from(stream.join(""), "utf8")
 }
+
+function stream2buffer(stream: Readable): Promise<Buffer> {
+    return new Promise((resolve, reject) => {
+        const _buf: Buffer[] = [];
+        stream.on("data", (chunk) => _buf.push(chunk));
+        stream.on("end", () => resolve(Buffer.concat(_buf)));
+        stream.on("error", (err) => reject(err));
+    });
+} 
