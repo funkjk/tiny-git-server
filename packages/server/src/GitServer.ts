@@ -40,10 +40,10 @@ export class GitServer {
             // 'deepen-not','deepen-relative','no-progress','include-tag',
             // 'multi_ack_detailed', 'allow-tip-sha1-in-want', 'allow-reachable-sha1-in-want', 
             // 'no-done', 'filter'
-            'side-band-64k',
-            'no-done',
+            // 'side-band-64k',
+            // 'no-done',
             // 'multi_ack_detailed',
-            // ...(args.capabilities) ? args.capabilities : ['no-done', 'side-band-64k']
+            ...(args.capabilities) ? args.capabilities : ['no-done', 'side-band-64k']
         ]
         this.agentName = "tiny-git"
     }
@@ -174,7 +174,7 @@ export class GitServer {
             uploadObjectList.map(e => { return { type: e.type, oid: e.oid } }))
         const packedStream = await GitPktWrite.write(objectsEntries)
         if (haveAckList.length > 0) {
-            const responseBuffer = Buffer.concat([ackResponseBuffer, packedStream])
+            const responseBuffer = Buffer.concat([ackResponseBuffer, encodeSideBand(PackfileChannel, packedStream), Buffer.from("0000")])
             return responseBuffer
         } else {
             const nak = "0008NAK\n"

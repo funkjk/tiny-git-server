@@ -5,7 +5,7 @@ const config = dotenv.config().parsed;
 import * as git from "isomorphic-git"
 import http from "isomorphic-git/http/node"
 import fs from 'fs';
-import { namespace, sequelize, sqlfs } from "../src/setup-git-fs";
+import { namespace, sqlfs } from "../src/setup-git-fs";
 
 const LOCAL_FS_PATH = "dist"
 
@@ -17,16 +17,10 @@ const author = {
 test("receive_pack_test", async () => {
     await http.request({ url: `http://localhost:3000/init?repo=${getRepoName()}`, method: "POST" })
     await git.clone({ ...getDefaultParams() })
-    console.log("after init")
     fs.writeFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/edit/test.txt", "testdata")
     await git.add({ ...getDefaultParams(), filepath: "test.txt" })
     await git.commit({ ...getDefaultParams(), message: "add test", author })
-    try {
-        await git.push({ ...getDefaultParams(), force: true })
-        console.log("after push")
-    } catch (e) {
-        console.error(e)
-    }
+    await git.push({ ...getDefaultParams() })
     await git.clone({
         ...getDefaultParams(),
         // url:"http://localhost:54321/functions/v1/git-server/funakigitserver_local",
@@ -35,9 +29,25 @@ test("receive_pack_test", async () => {
         // fs:sqlfs,
         dir: LOCAL_FS_PATH + "/" + getRepoName() + "/read",
     })
+    const readText = fs.readFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/read/test.txt")
+    expect(readText.toString("utf8")).toBe("testdata")
 
 
-    console.log("after clone read")
+    fs.writeFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/edit/test.txt", "testdata update")
+    await git.add({ ...getDefaultParams(), filepath: "test.txt" })
+    await git.commit({ ...getDefaultParams(), message: "update test", author })
+    await git.push({ ...getDefaultParams(), force: true })
+
+
+    await git.pull({
+        ...getDefaultParams(),
+        dir: LOCAL_FS_PATH + "/" + getRepoName() + "/read",
+        author
+    })
+    const updatedText = fs.readFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/read/test.txt")
+    expect(updatedText.toString("utf8")).toBe("testdata update")
+
+
 
 }, 30 * 1000)
 
