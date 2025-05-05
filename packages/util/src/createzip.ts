@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 
-import * as igit from "@tiny-git-server/util"
+import * as igit from "./isomorphic-git-proxy"
 
 export async function createZip(_fs:any, dir:string) {
     const fs = new igit.FileSystem(_fs)
