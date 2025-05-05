@@ -19,6 +19,7 @@
   "scripts": {
     "test": "cd examples/node-examples && jest",
     "build": "lerna run build",
+    "publish":"lerna publish from-git --yes",
     "dev": "cd examples/node-examples && nodemon"
   },
   "dependencies": {
