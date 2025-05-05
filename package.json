@@ -40,7 +40,7 @@
   "scripts": {
     "test": "cd examples/node-examples && jest",
     "build": "lerna run build",
-    "publish":"lerna publish from-git --yes",
+    "publish": "lerna publish from-git --yes",
     "dev": "cd examples/node-examples && nodemon",
     "versionup": "lerna version --conventional-commits --no-git-tag-version",
     "versionup:patch": "lerna version patch --conventional-commits --no-git-tag-version",
@@ -56,5 +56,8 @@
   },
   "dependencies": {
     "rollup-plugin-del": "^1.0.1"
+  },
+  "publishConfig": {
+    "@funkjk:registry": "https://npm.pkg.github.com"
   }
 }
