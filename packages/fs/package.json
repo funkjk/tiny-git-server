@@ -1,6 +1,6 @@
 {
   "name": "@tiny-git-server/fs",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "> TODO: description",
   "license": "ISC",
   "scripts": {
@@ -20,8 +20,9 @@
     "rollup-plugin-postcss": "^4.0.2"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://funkjk@github.com/funkjk/tiny-git-server.git"
+    "url": "https://github.com/funkjk/tiny-git-server",
+    "directory": "packages/fs",
+    "type": "git"
   },
   "bugs": {
     "url": "https://github.com/funkjk/tiny-git-server/issues"
@@ -30,7 +31,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@tiny-git-server/util": "^0.1.5",
+    "@tiny-git-server/util": "^0.1.6",
     "@types/cls-hooked": "^4.3.9",
     "cls-hooked": "^4.2.2",
     "jszip": "^3.10.1",
