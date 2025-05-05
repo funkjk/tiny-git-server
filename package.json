@@ -57,6 +57,10 @@
   "dependencies": {
     "rollup-plugin-del": "^1.0.1"
   },
+	"repository": {
+		"url": "https://github.com/funkjk/tiny-git-server",
+		"type": "git"
+	},
   "publishConfig": {
     "@funkjk:registry": "https://npm.pkg.github.com"
   }

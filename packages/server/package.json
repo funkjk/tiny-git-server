@@ -25,10 +25,11 @@
     "ts-jest": "^29.2.5",
     "typescript": "^5.7.3"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://funkjk@github.com/funkjk/tiny-git-server.git"
-  },
+	"repository": {
+		"url": "https://github.com/funkjk/tiny-git-server",
+		"directory": "packages/server",
+		"type": "git"
+	},
   "publishConfig": {
     "access": "public"
   },

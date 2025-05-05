@@ -23,10 +23,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://funkjk@github.com/funkjk/tiny-git-server.git"
-  },
+	"repository": {
+		"url": "https://github.com/funkjk/tiny-git-server",
+		"directory": "packages/util",
+		"type": "git"
+	},
   "bugs": {
     "url": "https://github.com/funkjk/tiny-git-server/issues"
   }
