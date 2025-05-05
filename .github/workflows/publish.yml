@@ -13,18 +13,8 @@ jobs:
       - uses: actions/setup-node@v3
       - name: Install
         run: npm install
-
-  build:
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
       - name: Run build
         run: npm run build
-
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - name: Publish
         run: npm run publish
         env:
