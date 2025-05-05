@@ -1,6 +1,6 @@
 {
   "name": "@tiny-git-server/server",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "> TODO: description",
   "license": "ISC",
   "scripts": {
@@ -36,7 +36,7 @@
     "url": "https://github.com/funkjk/tiny-git-server/issues"
   },
   "dependencies": {
-    "@tiny-git-server/util": "^0.1.3",
+    "@tiny-git-server/util": "^0.1.4",
     "diff3": "^0.0.4",
     "sha.js": "^2.4.11"
   }
