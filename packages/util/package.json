@@ -20,6 +20,9 @@
     "rollup": "^4.34.6",
     "rollup-plugin-postcss": "^4.0.2"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://funkjk@github.com/funkjk/tiny-git-server.git"

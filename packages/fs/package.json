@@ -26,6 +26,9 @@
   "bugs": {
     "url": "https://github.com/funkjk/tiny-git-server/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@tiny-git-server/util": "^0.1.0",
     "@types/cls-hooked": "^4.3.9",
