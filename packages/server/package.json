@@ -1,6 +1,6 @@
 {
   "name": "@tiny-git-server/server",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "> TODO: description",
   "license": "ISC",
   "scripts": {
@@ -25,11 +25,11 @@
     "ts-jest": "^29.2.5",
     "typescript": "^5.7.3"
   },
-	"repository": {
-		"url": "https://github.com/funkjk/tiny-git-server",
-		"directory": "packages/server",
-		"type": "git"
-	},
+  "repository": {
+    "url": "https://github.com/funkjk/tiny-git-server",
+    "directory": "packages/server",
+    "type": "git"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -37,7 +37,7 @@
     "url": "https://github.com/funkjk/tiny-git-server/issues"
   },
   "dependencies": {
-    "@tiny-git-server/util": "^0.1.5",
+    "@tiny-git-server/util": "^0.1.6",
     "diff3": "^0.0.4",
     "sha.js": "^2.4.11"
   }

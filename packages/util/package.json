@@ -1,6 +1,6 @@
 {
   "name": "@tiny-git-server/util",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "> TODO: description",
   "license": "ISC",
   "main": "dist/index.js",
@@ -23,11 +23,11 @@
   "publishConfig": {
     "access": "public"
   },
-	"repository": {
-		"url": "https://github.com/funkjk/tiny-git-server",
-		"directory": "packages/util",
-		"type": "git"
-	},
+  "repository": {
+    "url": "https://github.com/funkjk/tiny-git-server",
+    "directory": "packages/util",
+    "type": "git"
+  },
   "bugs": {
     "url": "https://github.com/funkjk/tiny-git-server/issues"
   }
