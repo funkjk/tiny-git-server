@@ -1,6 +1,6 @@
 {
   "name": "@tiny-git-server/fs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "> TODO: description",
   "license": "ISC",
   "scripts": {
@@ -30,7 +30,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@tiny-git-server/util": "^0.1.0",
+    "@tiny-git-server/util": "^0.1.1",
     "@types/cls-hooked": "^4.3.9",
     "cls-hooked": "^4.2.2",
     "jszip": "^3.10.1",

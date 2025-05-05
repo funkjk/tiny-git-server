@@ -93,3 +93,5 @@ curl -v -X POST "http://localhost:3000/init?repo=test_sql_20250201"
 
 git clone http://localhost:3000/test_sql_20250201 .
 
+
+https://github.com/azu/lerna-monorepo-github-actions-release/blob/master/README.md
