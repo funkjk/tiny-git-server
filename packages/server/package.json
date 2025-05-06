@@ -3,6 +3,7 @@
   "version": "0.1.11",
   "description": "> TODO: description",
   "license": "ISC",
+  "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c ../../rollup.config.js --bundleConfigAsCjs",
     "test": "jest"
@@ -12,7 +13,7 @@
     "test": "__tests__"
   },
   "files": [
-    "dist"
+    "dist/"
   ],
   "devDependencies": {
     "@rollup/plugin-typescript": "^12.1.2",
