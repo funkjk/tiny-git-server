@@ -24,8 +24,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install
         run: npm install
-      - name: Run build
-        run: npm run build
       - name: Set Current Version
         run: |
           CURRENT_VERSION=$(node -p 'require("./lerna.json").version')
@@ -66,6 +64,8 @@ jobs:
             ${{ github.event.pull_request.body }}
           draft: false
           prerelease: false
+      - name: Run build
+        run: npm run build
       - name: Publish
         if: steps.tag_check.outputs.exists_tag == 'false'
         run: |
