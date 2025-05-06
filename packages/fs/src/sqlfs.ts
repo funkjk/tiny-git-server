@@ -1,4 +1,4 @@
-import { DefaultLogging, Logging, LogLevel } from "@tiny-git-server/util";
+import { DefaultLogging, Logging, LogLevel } from "@funkjk/tiny-git-server-util";
 
 export enum GitFileType {
     DIR = "DIR",

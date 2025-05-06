@@ -1,4 +1,4 @@
-import * as igit from "@tiny-git-server/util"
+import * as igit from "@funkjk/tiny-git-server-util"
 
 export interface UploadObjectsList {
   oid: string, type: string, object: any
