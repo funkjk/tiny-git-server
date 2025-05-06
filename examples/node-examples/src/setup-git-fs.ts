@@ -1,5 +1,5 @@
 
-import { SequelizeGitFile, SequelizeGitFileDbDefinition, SequelizeSQLFS } from '../../../packages/fs/src';
+import { SequelizeGitFile, SequelizeGitFileDbDefinition, SequelizeSQLFS } from '@funkjk/tiny-git-server-fs';
 
 import { DataTypes, Sequelize } from 'sequelize'
 import cls from 'cls-hooked'
