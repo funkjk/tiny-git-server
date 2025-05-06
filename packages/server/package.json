@@ -1,6 +1,6 @@
 {
   "name": "@tiny-git-server/server",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "> TODO: description",
   "license": "ISC",
   "scripts": {
