@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.15](https://github.com/funkjk/tiny-git-server/compare/v0.1.7...v0.1.15) (2025-05-06)
+
+**Note:** Version bump only for package @funkjk/tiny-git-server-util
+
+
+
+
+
 ## [0.1.14](https://github.com/funkjk/tiny-git-server/compare/v0.1.7...v0.1.14) (2025-05-06)
 
 **Note:** Version bump only for package @funkjk/tiny-git-server-util

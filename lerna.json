@@ -1,11 +1,11 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "command": {
     "publish": {
       "conventionalCommits": true,
       "message": "chore(release): publish",
-      "directory": "{workspaceRoot}/{projectRoot}",
+      "directory": "{workspaceRoot}/dist/{projectRoot}",
       "registry": "https://npm.pkg.github.com"
     }
   }
