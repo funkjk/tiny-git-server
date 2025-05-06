@@ -11,7 +11,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@funkjk/tiny-git-server-util": "^0.1.10",
+    "@funkjk/tiny-git-server-core": "^0.1.11",
+    "@funkjk/tiny-git-server-fs": "^0.1.11",
+    "@funkjk/tiny-git-server-util": "^0.1.11",
     "clean-git-ref": "^2.0.1",
     "cls-hooked": "^4.2.2",
     "crc-32": "^1.2.2",
