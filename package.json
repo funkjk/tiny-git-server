@@ -1,6 +1,7 @@
 {
-  "name": "root",
-  "private": true,
+  "name": "@funkjk/tiny-git-server",
+  "version": "0.1.7",
+  "private": false,
   "workspaces": [
     "packages/*"
   ],
