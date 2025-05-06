@@ -1,5 +1,5 @@
 
-import { convertLogMessageToString, LogLevel } from '@tiny-git-server/util';
+import { convertLogMessageToString, LogLevel } from '@funkjk/tiny-git-server-util';
 import winston from "winston"
 
 const debugLogEnable = process.env.DEBUG_LOG === "true"
