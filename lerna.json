@@ -5,6 +5,7 @@
     "publish": {
       "conventionalCommits": true,
       "message": "chore(release): publish",
+      "directory": "{workspaceRoot}/dist/{projectRoot}",
       "registry": "https://npm.pkg.github.com"
     }
   }
