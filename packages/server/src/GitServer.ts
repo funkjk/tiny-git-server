@@ -1,13 +1,13 @@
 import { IncomingMessage, ServerResponse } from "http";
 
 
-import * as igit from "@tiny-git-server/util"
-import * as git from "@tiny-git-server/util"
+import * as igit from "@funkjk/tiny-git-server-util"
+import * as git from "@funkjk/tiny-git-server-util"
 import * as is from "./identity-request";
 import { GitPktWrite, ObjectEntry } from "./GitPktWrite";
 import { Readable } from "stream";
 import { _listUploadObjects } from "./listUploadObjects";
-import { DefaultLogging, LogLevel, Logging } from "@tiny-git-server/util"
+import { DefaultLogging, LogLevel, Logging } from "@funkjk/tiny-git-server-util"
 import { ErrorType, GitServerError } from "./GitServerError";
 
 const TYPE_NUMBDER: any = {}

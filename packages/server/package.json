@@ -1,5 +1,5 @@
 {
-  "name": "@funkjk/tiny-git-server-server",
+  "name": "@funkjk/tiny-git-server-core",
   "version": "0.1.9",
   "description": "> TODO: description",
   "license": "ISC",
