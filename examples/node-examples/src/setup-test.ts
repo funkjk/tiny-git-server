@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 const config = dotenv.config().parsed;
 
-import { setIsomorphicGit,setIsomorphicGitInternal } from '@tiny-git-server/util';
+import { setIsomorphicGit,setIsomorphicGitInternal } from '@funkjk/tiny-git-server-util';
 
 // //@ts-ignore
 // import * as igit from "isomorphic-git/internal-apis"
