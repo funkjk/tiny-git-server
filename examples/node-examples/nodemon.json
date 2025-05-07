@@ -1,8 +1,9 @@
 {
     "watch": [
-        ".",
+        "./src",
         "../../packages"
     ],
     "ext": "ts",
+    "ignore": ["dist/**"],
     "exec": "ts-node ./index.ts"
 }

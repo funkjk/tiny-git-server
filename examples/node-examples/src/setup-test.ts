@@ -1,16 +1,15 @@
 import dotenv from 'dotenv'
-const config = dotenv.config().parsed;
+dotenv.config().parsed;
 
 import { setIsomorphicGit,setIsomorphicGitInternal } from '@funkjk/tiny-git-server-util';
 
 // //@ts-ignore
-// import * as igit from "isomorphic-git/internal-apis"
-import * as git from "isomorphic-git"
+// import * as git from "isomorphic-git"
 
 //@ts-ignore
 import * as igit from "../../../isomorphic-git/internal-apis.cjs"
 //@ts-ignore
-// import * as git from "../../../isomorphic-git/index.cjs"
+import * as git from "../../../isomorphic-git/index.cjs"
 
 setIsomorphicGitInternal(igit)
 setIsomorphicGit(git)

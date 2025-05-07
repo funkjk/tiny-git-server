@@ -1,20 +1,23 @@
 import { IncomingMessage, ServerResponse } from 'http'
-import { GitServer } from '@funkjk/tiny-git-server-core';
+import { GitServer } from '../../../packages/server/src';
 import { createZip } from '@funkjk/tiny-git-server-util';
 import { createLogger, gitServerLogging } from './create-logger';
 import { sqlfs } from './setup-git-fs';
 
 
 import { namespace, sequelize } from './setup-git-fs';
-import { ErrorType, HTTP_STATUS_BY_ERROR } from '@funkjk/tiny-git-server-core';
-import { NAMESPACE_TRANSACTION_NAME } from '@funkjk/tiny-git-server-fs';
+import { ErrorType, HTTP_STATUS_BY_ERROR } from '../../../packages/server/src';
+import { NAMESPACE_TRANSACTION_NAME } from '../../../packages/fs/src';
 
+import * as fs from "fs"
 
-const ROOT_DIR = "examples/repos"
+const ROOT_DIR = "dist/repos"
 const logger = createLogger()
-const fs = sqlfs
+const USE_SQLFS = process.env["USE_SQLFS"] === 'true'
+const usingFileSystem = USE_SQLFS ? sqlfs : fs
+console.log("usingFileSystem:" + (USE_SQLFS ? "sqlfs url=" + process.env.DATABASE_URL : "localFileSystem path=" + ROOT_DIR))
 
-export const gitServer = new GitServer({ fs: fs, rootDir: ROOT_DIR, logging: gitServerLogging })
+export const gitServer = new GitServer({ fs: usingFileSystem, rootDir: ROOT_DIR, logging: gitServerLogging })
 
 export const serveGitServer = async function (req: IncomingMessage, res: ServerResponse) {
     await withTx(req, res)
@@ -55,7 +58,7 @@ const gitServe = async function (req: IncomingMessage, res: ServerResponse) {
         res.end()
     } else if (pathname == "/download") {
         const repo = url.searchParams.get("repo")
-        const zipped = await createZip(fs, ROOT_DIR + "/" + repo)
+        const zipped = await createZip(usingFileSystem, ROOT_DIR + "/" + repo)
         const data = await zipped.generateAsync({ type: "uint8array" });
         const filename = `${repo}_${new Date().toISOString()}.zip`
         res.writeHead(200, "", {
