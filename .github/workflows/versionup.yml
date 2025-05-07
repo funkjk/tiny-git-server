@@ -5,13 +5,15 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
       - uses: actions/setup-node@v3
       - name: Git Identity
         run: |
@@ -49,4 +51,4 @@ jobs:
       - name: Push
         if: steps.tag_check.outputs.exists_tag != 'false'
         run: |
-          git push
+          git add . && git commit -m "auto version up patch version" && git push
