@@ -16,4 +16,4 @@ export const server = http.createServer(async (req: IncomingMessage, res: Server
 })
 
 server.listen(3000)
-logger.info('start server port 3000', { test: "test" })
+logger.info('start server port 3000')

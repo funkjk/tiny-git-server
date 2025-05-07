@@ -1,11 +1,39 @@
+# tiny-git-server
+
+Pure JavaScript GitServer which has few features.
 
 
 
 
-npm run dev
+## Run Example
+
+### local filesystem mode
+
+```bash
+$>USE_SQLFS=false npm run dev
+usingFileSystem:localFileSystem path=dist/repos
+2025-05-07 14:59:26 main info: start server port 3000 
+```
+
+### Use git cli
+
+```bash
+curl -v -X POST "http://localhost:3000/init?repo=testgitrepo1"
+cd testgitrepo1
+echo "first file" >> test.txt
+git add test.txt
+git commit -m "first commit"
+git push
+```
 
 
-2025-05-07 10:43:53 main info: start server port 3000 
+### SQL filesystem mode
 
-curl -v -X POST "http://localhost:3000/init?repo=testgitrepo"
-git clone http://localhost:3000/testgitrepo
+start DB server using examples/postgresql-docker/docker-compose.yml.
+and then execute examples/schema.ddl.
+
+```bash
+$>USE_SQLFS=true npm run dev
+usingFileSystem:sqlfs url=postgres://postgres:postgres@localhost:5433/gitdb01
+2025-05-07 14:58:13 main info: start server port 3000 
+```

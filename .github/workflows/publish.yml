@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [closed]
+    types: [opened, synchronize]
     branches:
       - main
 
@@ -41,6 +41,14 @@ jobs:
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Version up
+        if: steps.tag_check.outputs.exists_tag == 'false'
+        run: |
+          npm run versionup:
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Git Tag
         if: steps.tag_check.outputs.exists_tag == 'false'
         uses: pkgdeps/git-tag-action@v2
