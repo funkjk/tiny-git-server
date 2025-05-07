@@ -45,6 +45,7 @@
     "publish": "lerna publish from-package --yes",
     "dev": "cd examples/node-examples && nodemon",
     "versionup": "lerna version --conventional-commits --no-git-tag-version",
+    "versionup-auto:patch": "lerna version patch --conventional-commits --no-git-tag-version --yes",
     "versionup:patch": "lerna version patch --conventional-commits --no-git-tag-version",
     "versionup:minor": "lerna version minor --conventional-commits --no-git-tag-version",
     "versionup:major": "lerna version major --conventional-commits --no-git-tag-version",
