@@ -42,7 +42,7 @@ git push
 ### SQL filesystem mode
 
 start DB server using examples/postgresql-docker/docker-compose.yml.
-and then execute examples/schema.ddl.
+(which include ddl execution.)
 
 ```bash
 $>USE_SQLFS=true npm run dev
