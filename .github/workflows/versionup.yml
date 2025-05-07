@@ -51,4 +51,4 @@ jobs:
       - name: Push
         if: steps.tag_check.outputs.exists_tag != 'false'
         run: |
-          git push
+          git add . && git commit -m "auto version up patch version" && git push
