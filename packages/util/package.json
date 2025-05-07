@@ -1,6 +1,6 @@
 {
   "name": "@funkjk/tiny-git-server-util",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "> TODO: description",
   "license": "ISC",
   "main": "dist/index.js",
