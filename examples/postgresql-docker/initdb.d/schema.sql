@@ -1,4 +1,3 @@
-
 CREATE TABLE IF NOT EXISTS files
 (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -10,4 +9,4 @@ CREATE TABLE IF NOT EXISTS files
     data bytea,
     repository_id character varying(256) ,
     UNIQUE (filepath)
-)
+);
