@@ -1,13 +1,13 @@
 import { IncomingMessage, ServerResponse } from 'http'
-import { GitServer } from '@funkjk/tiny-git-server-core';
+import { GitServer } from '../../../packages/server/src';
 import { createZip } from '@funkjk/tiny-git-server-util';
 import { createLogger, gitServerLogging } from './create-logger';
 import { sqlfs } from './setup-git-fs';
 
 
 import { namespace, sequelize } from './setup-git-fs';
-import { ErrorType, HTTP_STATUS_BY_ERROR } from '@funkjk/tiny-git-server-core';
-import { NAMESPACE_TRANSACTION_NAME } from '@funkjk/tiny-git-server-fs';
+import { ErrorType, HTTP_STATUS_BY_ERROR } from '../../../packages/server/src';
+import { NAMESPACE_TRANSACTION_NAME } from '../../../packages/fs/src';
 
 
 const ROOT_DIR = "examples/repos"

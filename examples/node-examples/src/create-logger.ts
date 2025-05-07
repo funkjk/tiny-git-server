@@ -2,13 +2,13 @@
 import { convertLogMessageToString, LogLevel } from '@funkjk/tiny-git-server-util';
 import winston from "winston"
 
-const debugLogEnable = process.env.DEBUG_LOG === "true"
+const debugLogEnable = process.env.DEBUG_LOG !== "true"
 
 const LEVELS_BY_CATEGORY: any = {
     "main": "info",
-    "sql": debugLogEnable ? "debug" :undefined,
-    "sqlfs":  debugLogEnable ? "debug" :undefined,
-    "GitServer": debugLogEnable ? "debug" :undefined,
+    "sql": debugLogEnable ? "silly" :undefined,
+    "sqlfs":  debugLogEnable ? "silly" :undefined,
+    "GitServer": debugLogEnable ? "silly" :undefined,
     // "GitServer": "silly",
 }
 

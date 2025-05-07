@@ -18,7 +18,9 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "^12.1.2",
     "rollup": "^4.34.6",
-    "rollup-plugin-postcss": "^4.0.2"
+    "rollup-plugin-postcss": "^4.0.2",
+    "pg": "^8.13.1",
+    "sequelize": "^6.37.5"
   },
   "repository": {
     "url": "https://github.com/funkjk/tiny-git-server",
@@ -34,7 +36,6 @@
   "dependencies": {
     "@types/cls-hooked": "^4.3.9",
     "cls-hooked": "^4.2.2",
-    "jszip": "^3.10.1",
-    "sequelize": "^6.37.5"
+    "jszip": "^3.10.1"
   }
 }

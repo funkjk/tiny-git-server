@@ -32,9 +32,11 @@
     "crc32": "^0.2.2",
     "jest": "^29.7.0",
     "lerna": "^8.1.9",
+    "nodemon": "^3.1.10",
     "pako": "^1.0.10",
     "path-browserify": "^1.0.1",
     "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   },
   "scripts": {
@@ -57,10 +59,10 @@
   "dependencies": {
     "rollup-plugin-del": "^1.0.1"
   },
-	"repository": {
-		"url": "https://github.com/funkjk/tiny-git-server",
-		"type": "git"
-	},
+  "repository": {
+    "url": "https://github.com/funkjk/tiny-git-server",
+    "type": "git"
+  },
   "publishConfig": {
     "@funkjk:registry": "https://npm.pkg.github.com"
   }
