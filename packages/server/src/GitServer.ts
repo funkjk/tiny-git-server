@@ -51,7 +51,7 @@ export class GitServer {
         if (!repoName || repoName.length == 0) {
             throw new GitServerError(ErrorType.INVALID_PARAMETER, `invalid name length. repository [${repoName}]`)
         }
-        if (!repoName.match("^[A-Za-z0-9_]+$")) {
+        if (!repoName.match("^[A-Za-z0-9_-]+$")) { // TODO define valid name
             throw new GitServerError(ErrorType.INVALID_PARAMETER, `invalid name pattern. repository [${repoName}]`)
         }
         const gitdir = this._getGitDir(repoName)
