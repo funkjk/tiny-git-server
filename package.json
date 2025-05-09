@@ -27,6 +27,8 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "@funkjk/isomorphic-git":"0.0.0-development-patch-for-tiny-git-server",
+    "@funkjk/tiny-git-server-util": "^0.1.20",
     "async-lock": "^1.4.1",
     "crc-32": "^1.2.2",
     "crc32": "^0.2.2",
