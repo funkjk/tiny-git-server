@@ -1,0 +1,5 @@
+node_modules/
+packages/*/dist/
+lerna-debug.log
+dist/
+examples\postgresql-docker\postgres_service
