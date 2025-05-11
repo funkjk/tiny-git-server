@@ -8,9 +8,12 @@ export enum ErrorType {
 export class GitServerError {
     type: ErrorType;
     message: string;
+    errorClass: string;
+    static ERROR_CLASS = "GitServerError"
     constructor(type: ErrorType, message?: string) {
         this.type = type
         this.message = message ?? type
+        this.errorClass = GitServerError.ERROR_CLASS
     }
 }
 
