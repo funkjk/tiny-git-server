@@ -1,0 +1,34 @@
+{
+  "name": "@funkjk/tiny-git-server-util",
+  "version": "0.1.20",
+  "description": "> TODO: description",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rollup -c ../../rollup.config.js --bundleConfigAsCjs",
+    "test": "node ./__tests__/util.test.js"
+  },
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist/"
+  ],
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^12.1.2",
+    "rollup": "^4.34.6",
+    "rollup-plugin-postcss": "^4.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "url": "https://github.com/funkjk/tiny-git-server",
+    "directory": "packages/util",
+    "type": "git"
+  },
+  "bugs": {
+    "url": "https://github.com/funkjk/tiny-git-server/issues"
+  }
+}

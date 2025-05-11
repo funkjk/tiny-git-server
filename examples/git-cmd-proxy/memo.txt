@@ -1,0 +1,106 @@
+C:\opt\projects\tmp\funakigitserver\edit_local>git push
+10:54:06.613168 exec-cmd.c:237          trace: resolved executable dir: C:/Program Files/Git/mingw64/bin
+10:54:06.616677 git.c:444               trace: built-in: git push
+10:54:06.619212 run-command.c:663       trace: run_command: GIT_DIR=.git git remote-http origin http://localhost:3000/funakigitserver_local_node
+10:54:06.645164 exec-cmd.c:237          trace: resolved executable dir: C:/Program Files/Git/mingw64/libexec/git-core
+10:54:06.647568 git.c:729               trace: exec: git-remote-http origin http://localhost:3000/funakigitserver_local_node
+10:54:06.647568 run-command.c:663       trace: run_command: git-remote-http origin http://localhost:3000/funakigitserver_local_node
+10:54:06.678936 exec-cmd.c:237          trace: resolved executable dir: C:/Program Files/Git/mingw64/libexec/git-core
+10:54:06.712674 http.c:774              == Info: Couldn't find host localhost in the .netrc file; using defaults
+10:54:06.723676 http.c:774              == Info:   Trying ::1:3000...
+10:54:06.723676 http.c:774              == Info: Connected to localhost (::1) port 3000 (#0)
+10:54:06.724683 http.c:721              => Send header, 0000000208 bytes (0x000000d0)
+10:54:06.724683 http.c:733              => Send header: GET /funakigitserver_local_node/info/refs?service=git-receive-pack HTTP/1.1
+10:54:06.724683 http.c:733              => Send header: Host: localhost:3000
+10:54:06.724683 http.c:733              => Send header: User-Agent: git/2.29.2.windows.2
+10:54:06.724683 http.c:733              => Send header: Accept: */*
+10:54:06.724683 http.c:733              => Send header: Accept-Encoding: deflate, gzip, br, zstd
+10:54:06.724683 http.c:733              => Send header: Pragma: no-cache
+10:54:06.724683 http.c:733              => Send header:
+10:54:06.761892 http.c:774              == Info: Mark bundle as not supporting multiuse
+10:54:06.761892 http.c:721              <= Recv header, 0000000017 bytes (0x00000011)
+10:54:06.761892 http.c:733              <= Recv header: HTTP/1.1 200 OK
+10:54:06.761892 http.c:721              <= Recv header, 0000000060 bytes (0x0000003c)
+10:54:06.761892 http.c:733              <= Recv header: content-type: application/x-git-receive-pack-advertisement
+10:54:06.761892 http.c:721              <= Recv header, 0000000037 bytes (0x00000025)
+10:54:06.761892 http.c:733              <= Recv header: Date: Sun, 16 Feb 2025 01:54:06 GMT
+10:54:06.761892 http.c:721              <= Recv header, 0000000024 bytes (0x00000018)
+10:54:06.761892 http.c:733              <= Recv header: Connection: keep-alive
+10:54:06.761892 http.c:721              <= Recv header, 0000000023 bytes (0x00000017)
+10:54:06.761892 http.c:733              <= Recv header: Keep-Alive: timeout=5
+10:54:06.761892 http.c:721              <= Recv header, 0000000028 bytes (0x0000001c)
+10:54:06.761892 http.c:733              <= Recv header: Transfer-Encoding: chunked
+10:54:06.761892 http.c:721              <= Recv header, 0000000002 bytes (0x00000002)
+10:54:06.761892 http.c:733              <= Recv header:
+10:54:06.786003 http.c:774              == Info: Connection #0 to host localhost left intact
+10:54:06.786003 pkt-line.c:80           packet:          git< # service=git-receive-pack
+10:54:06.786003 pkt-line.c:80           packet:          git< 0000
+10:54:06.786003 pkt-line.c:80           packet:          git< dfc23518c406425021aa0e5f313139eea2a41f84 refs/heads/master\0report-status report-status-v2 delete-refs side-band-64k quiet atomic ofs-delta object-format=sha1 agent=git/2.29.2.windows.2
+10:54:06.786003 pkt-line.c:80           packet:          git< 0000
+10:54:06.788237 pkt-line.c:80           packet:          git> refs/heads/master:refs/heads/master
+10:54:06.788237 pkt-line.c:80           packet:          git> 0000
+10:54:06.788237 run-command.c:663       trace: run_command: git send-pack --stateless-rpc --helper-status --thin --progress http://localhost:3000/funakigitserver_local_node/ --stdin
+10:54:06.814188 exec-cmd.c:237          trace: resolved executable dir: C:/Program Files/Git/mingw64/libexec/git-core
+10:54:06.819720 git.c:444               trace: built-in: git send-pack --stateless-rpc --helper-status --thin --progress http://localhost:3000/funakigitserver_local_node/ --stdin
+10:54:06.821105 pkt-line.c:80           packet:          git< refs/heads/master:refs/heads/master
+10:54:06.821105 pkt-line.c:80           packet:          git< 0000
+10:54:06.821105 pkt-line.c:80           packet:          git< dfc23518c406425021aa0e5f313139eea2a41f84 refs/heads/master\0report-status report-status-v2 delete-refs side-band-64k quiet atomic ofs-delta object-format=sha1 agent=git/2.29.2.windows.2
+10:54:06.821105 pkt-line.c:80           packet:          git< 0000
+10:54:06.825824 pkt-line.c:80           packet:          git> dfc23518c406425021aa0e5f313139eea2a41f84 b13a6be938c2cbb80a6e0b5de646e67c14da944a refs/heads/master\0 report-status-v2 side-band-64k object-format=sha1 agent=git/2.29.2.windows.2
+10:54:06.825824 pkt-line.c:80           packet:          git> 0000
+10:54:06.825824 run-command.c:663       trace: run_command: git pack-objects --all-progress-implied --revs --stdout --thin --delta-base-offset --progress
+10:54:06.825824 pkt-line.c:80           packet:          git< 00b5dfc23518c406425021aa0e5f313139eea2a41f84 b13a6be938c2cbb80a6e0b5de646e67c14da944a refs/heads/master\0 report-status-v2 side-band-64k object-format=sha1 agent=git/2.29.2.windows.20000
+10:54:06.852891 exec-cmd.c:237          trace: resolved executable dir: C:/Program Files/Git/mingw64/libexec/git-core
+10:54:06.856890 git.c:444               trace: built-in: git pack-objects --all-progress-implied --revs --stdout --thin --delta-base-offset --progress
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+10:54:06.869890 pkt-line.c:80           packet:          git< PACK ...
+Writing objects: 100% (3/3), 259 bytes | 259.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+10:54:06.875077 pkt-line.c:80           packet:          git> 0000
+10:54:06.875077 http.c:774              == Info: Couldn't find host localhost in the .netrc file; using defaults
+10:54:06.875077 http.c:774              == Info: Found bundle for host localhost: 0x36df460 [serially]
+10:54:06.875077 http.c:774              == Info: Can not multiplex, even if we wanted to!
+10:54:06.875077 http.c:774              == Info: Re-using existing connection! (#0) with host localhost
+10:54:06.875077 http.c:774              == Info: Connected to localhost (::1) port 3000 (#0)
+10:54:06.875077 http.c:721              => Send header, 0000000282 bytes (0x0000011a)
+10:54:06.875077 http.c:733              => Send header: POST /funakigitserver_local_node/git-receive-pack HTTP/1.1
+10:54:06.875077 http.c:733              => Send header: Host: localhost:3000
+10:54:06.875077 http.c:733              => Send header: User-Agent: git/2.29.2.windows.2
+10:54:06.875077 http.c:733              => Send header: Accept-Encoding: deflate, gzip, br, zstd
+10:54:06.875077 http.c:733              => Send header: Content-Type: application/x-git-receive-pack-request
+10:54:06.875077 http.c:733              => Send header: Accept: application/x-git-receive-pack-result
+10:54:06.875077 http.c:733              => Send header: Content-Length: 444
+10:54:06.875077 http.c:733              => Send header:
+10:54:06.875077 http.c:774              == Info: upload completely sent off: 444 out of 444 bytes
+10:54:07.081249 http.c:774              == Info: Mark bundle as not supporting multiuse
+10:54:07.081249 http.c:721              <= Recv header, 0000000017 bytes (0x00000011)
+10:54:07.081249 http.c:733              <= Recv header: HTTP/1.1 200 OK
+10:54:07.081249 http.c:721              <= Recv header, 0000000053 bytes (0x00000035)
+10:54:07.081249 http.c:733              <= Recv header: content-type: application/x-git-receive-pack-result
+10:54:07.081249 http.c:721              <= Recv header, 0000000037 bytes (0x00000025)
+10:54:07.081249 http.c:733              <= Recv header: Date: Sun, 16 Feb 2025 01:54:07 GMT
+10:54:07.081249 http.c:721              <= Recv header, 0000000024 bytes (0x00000018)
+10:54:07.081249 http.c:733              <= Recv header: Connection: keep-alive
+10:54:07.081249 http.c:721              <= Recv header, 0000000023 bytes (0x00000017)
+10:54:07.081249 http.c:733              <= Recv header: Keep-Alive: timeout=5
+10:54:07.081249 http.c:721              <= Recv header, 0000000028 bytes (0x0000001c)
+10:54:07.081249 http.c:733              <= Recv header: Transfer-Encoding: chunked
+10:54:07.081249 http.c:721              <= Recv header, 0000000002 bytes (0x00000002)
+10:54:07.081249 http.c:733              <= Recv header:
+10:54:07.081249 pkt-line.c:80           packet:     sideband< \1000eunpack ok0019ok refs/heads/master0000
+10:54:07.081249 pkt-line.c:80           packet:          git< unpack ok
+10:54:07.081249 pkt-line.c:80           packet:          git< ok refs/heads/master
+10:54:07.081249 pkt-line.c:80           packet:          git< 0000
+10:54:07.081249 pkt-line.c:80           packet:          git> 0000
+10:54:07.124859 pkt-line.c:80           packet:     sideband< 0000
+10:54:07.124859 http.c:774              == Info: Connection #0 to host localhost left intact
+To http://localhost:3000/funakigitserver_local_node
+   dfc2351..b13a6be  master -> master
+
+start
+303062646466633233353138633430363432353032316161306535663331333133396565613261343166383420726566732f68656164732f6d6173746572007265706f72742d737461747573207265706f72742d7374617475732d76322064656c6574652d7265667320736964652d62616e642d36346b2071756965742061746f6d6963206f66732d64656c7461206f626a6563742d666f726d61743d73686131206167656e743d6769742f322e32392e322e77696e646f77732e320a30303030
+303033300130303065756e7061636b206f6b0a303031396f6b20726566732f68656164732f6d61737465720a30303030
+30303030
