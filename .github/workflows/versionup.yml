@@ -1,13 +1,15 @@
 on:
   pull_request:
-    types: [opened]
+    types:
+      - opened
+      - synchronize
     branches:
       - main
 
 permissions:
   contents: write
   pull-requests: write
-  packages: write
+  packages: read
 
 jobs:
   publish:
