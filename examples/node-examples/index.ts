@@ -1,8 +1,5 @@
 import 'dotenv/config';
 
-
-import './src/isomorphic-git-proxy'
-
 import http, { IncomingMessage, ServerResponse } from 'http'
 import { createLogger } from './src/create-logger';
 import { serveGitServer } from './src/setup-git-server';

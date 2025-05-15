@@ -1,6 +1,6 @@
 import { startServer } from "../src/setup-test"
 import dotenv from 'dotenv'
-const config = dotenv.config().parsed;
+dotenv.config().parsed;
 import {spawn} from "child_process"
 
 import fs from 'fs';

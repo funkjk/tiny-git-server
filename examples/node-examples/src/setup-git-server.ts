@@ -15,7 +15,7 @@ const ROOT_DIR = "dist/repos"
 const logger = createLogger()
 const USE_SQLFS = process.env["USE_SQLFS"] === 'true'
 const usingFileSystem = USE_SQLFS ? sqlfs : fs
-console.log("usingFileSystem:" + (USE_SQLFS ? "sqlfs url=" + process.env.DATABASE_URL : "localFileSystem path=" + ROOT_DIR))
+logger.info("usingFileSystem:" + (USE_SQLFS ? "sqlfs url=" + process.env.DATABASE_URL : "localFileSystem path=" + ROOT_DIR))
 
 export const gitServer = new GitServer({ fs: usingFileSystem, rootDir: ROOT_DIR, logging: gitServerLogging })
 
