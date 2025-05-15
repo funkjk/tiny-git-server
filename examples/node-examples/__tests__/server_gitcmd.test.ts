@@ -3,14 +3,13 @@ import dotenv from 'dotenv'
 const config = dotenv.config().parsed;
 import {spawn} from "child_process"
 
-import http from "isomorphic-git/http/node"
 import fs from 'fs';
 import { namespace, sqlfs } from "../src/setup-git-fs";
 
 const LOCAL_FS_PATH = "dist"
 
 test("receive_pack_test_gitcmd", async () => {
-    await http.request({ url: `http://localhost:3000/init?repo=${getRepoName()}`, method: "POST" })
+    await fetch(`http://localhost:3000/init?repo=${getRepoName()}`, {method: "POST" })
 
     const editRepoPath = `${LOCAL_FS_PATH}/${getRepoName()}/edit`
     const readRepoPath = `${LOCAL_FS_PATH}/${getRepoName()}/read`

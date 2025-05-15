@@ -2,8 +2,8 @@ import { startServer } from "../src/setup-test"
 import dotenv from 'dotenv'
 const config = dotenv.config().parsed;
 
-import * as git from "isomorphic-git"
-import http from "isomorphic-git/http/node"
+import * as git from "@funkjk/isomorphic-git"
+import http from "@funkjk/isomorphic-git/http/node"
 import fs from 'fs';
 import { namespace, sqlfs } from "../src/setup-git-fs";
 
@@ -15,7 +15,7 @@ const author = {
 }
 
 test("receive_pack_test", async () => {
-    await http.request({ url: `http://localhost:3000/init?repo=${getRepoName()}`, method: "POST" })
+    await fetch(`http://localhost:3000/init?repo=${getRepoName()}`, {method: "POST" })
     await git.clone({ ...getDefaultParams() })
     fs.writeFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/edit/test.txt", "testdata")
     await git.add({ ...getDefaultParams(), filepath: "test.txt" })

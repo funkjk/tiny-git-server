@@ -5,6 +5,7 @@
 
 /** @type {import('jest').Config} */
 const config = {
+  maxWorkers:1,
   preset: "ts-jest",
   testEnvironment: "node",
   roots: [
@@ -19,6 +20,7 @@ const config = {
 
     "moduleFileExtensions": [
       "ts",
+      "cjs",
       "js"
     ]
 };
