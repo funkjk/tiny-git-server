@@ -76,20 +76,27 @@ export class GitServer {
 
     async handle(gitRequest: is.GitRequest) {
         this.logging(LogLevel.INFO, `handle ${gitRequest.type} ${gitRequest.repoName}`)
-        const handlers = {} as any
-        handlers[is.RequestType.INFO_RES_RECEIVE] = this._infoRes
-        handlers[is.RequestType.INFO_RES_UPLOAD] = this._infoRes
-        handlers[is.RequestType.UPLOAD_PACK] = this._gitUploadPack
-        handlers[is.RequestType.RECEIVE_PACK] = this._gitRecievePack
-        if (!handlers[gitRequest.type]) {
-            throw new GitServerError(ErrorType.NO_OPERATION, gitRequest.type)
-        }
         const exists = await this._repositoryExists(gitRequest.repoName)
         if (!exists) {
             throw new GitServerError(ErrorType.NOT_FOUND, `repository [${gitRequest.repoName}] not found`)
         }
-        const responseBuffer = await handlers[gitRequest.type].call(this, gitRequest)
-        this.logging(LogLevel.SILLY, "response buff:" + responseBuffer.toString("hex"))
+        this.logging(LogLevel.DEBUG, `handle ${gitRequest.type} ${gitRequest.repoName}`)
+        let responseBuffer: Buffer
+        switch (gitRequest.type) {
+            case is.RequestType.INFO_RES_RECEIVE:
+            case is.RequestType.INFO_RES_UPLOAD:
+                responseBuffer = await this._infoRes(gitRequest)
+                break
+            case is.RequestType.UPLOAD_PACK:
+                responseBuffer = await this._gitUploadPack(gitRequest)
+                break
+            case is.RequestType.RECEIVE_PACK:
+                responseBuffer = await this._gitRecievePack(gitRequest)
+                break
+            default:
+                throw new GitServerError(ErrorType.NO_OPERATION, gitRequest.type)
+        }
+        this.logging(LogLevel.SILLY, () => "response buff:" + responseBuffer.toString("hex"))
         return responseBuffer
     }
     async serve(req: IncomingMessage, res: ServerResponse) {
@@ -127,7 +134,7 @@ export class GitServer {
             capabilities: this.capabilities, agent: this.agentName,
             refs, symrefs
         })
-        this.logging(LogLevel.DEBUG, "_infoRes return", { refs, symrefs })
+        this.logging(LogLevel.DEBUG, () => "_infoRes return", { refs, symrefs })
         return Buffer.concat([resStreams, Buffer.from("0000")]) // use flush
     }
     async _gitUploadPack(gitRequest: is.GitRequest) {
@@ -138,7 +145,7 @@ export class GitServer {
         let loopIdx = 0
         const buff = await stream2buffer(gitRequest.requestData)
         const strm = Readable.from(buff)
-        this.logging(LogLevel.SILLY, "request buff: " + buff.toString("hex"))
+        this.logging(LogLevel.SILLY, () => "request buff: " + buff.toString("hex"))
 
         target = await igit.parseUploadPackRequest(strm)
         loopIdx++
@@ -189,56 +196,64 @@ export class GitServer {
         const responseBuffer: Buffer[] = []
         let capabilities: string[] = []
 
+        const buffArr: Buffer[] = []
         for await (let buff of gitRequest.requestData) {
-            this.logging(LogLevel.SILLY, "requestBuff:" + buff.toString("hex"))
-            const stream = Readable.from(buff)
-            // dont read direct by streamReader because cannot receive PACK line
-            const read = await igit.GitPktLine.streamReader(stream)
-            let lineBuffer = await read()
-            const triplets: any[] = []
-            let readedLength = 0
-            const READ_SIZE_BYTE = 4 // 4 is size byte
-            while (lineBuffer !== null) {
-                readedLength += lineBuffer.length + READ_SIZE_BYTE
-                const lineStr = lineBuffer.toString("utf8")
-                const lineData = lineStr.replace("\x00", "").split(" ")
-                const [oldoid, oid, fullRef] = lineData
-                if (lineData.slice(3, lineData.length - 1).length > 0) {
-                    capabilities = lineData.slice(3, lineData.length - 1)
-                }
-                triplets.push({ oldoid, oid, fullRef })
-                lineBuffer = await read()
-            }
-            this.logging(LogLevel.DEBUG, "_gitRecievePack capabilities", capabilities)
-
-            const getExternalRefDelta = async function (oid: string) {
-                const { type, object } = await igit._readObject({ fs, gitdir, oid })
-                return { type, format: 'content', object }
-            }
-
-            const packbuffer = buff.slice(readedLength + 4)
-            const packedData = await igit.GitPackIndex.fromPack({ pack: packbuffer, getExternalRefDelta })
-
-            for (let oid of packedData.hashes) {
-                const obj = await packedData.read({ oid })
-                await git.writeObject({ fs, gitdir, type: obj.type, object: obj.object })
-            }
-
-            this.logging(LogLevel.DEBUG, "_gitRecievePack triplets", triplets)
-            for (let triplet of triplets) {
-                if ("0000000000000000000000000000000000000000" != triplet.oldoid) {
-                    const currentOid = await igit.GitRefManager.resolve({ fs, gitdir, ref: triplet.fullRef })
-                    if (currentOid !== triplet.oldoid) {
-                        responseBuffer.push(igit.GitPktLine.encode(`ng ${triplet.fullRef} conflict\n`))
-                        break;
-                    }
-                }
-                await igit.GitRefManager.writeRef({ fs, gitdir, ref: triplet.fullRef, value: triplet.oid })
-                responseBuffer.push(igit.GitPktLine.encode(`ok ${triplet.fullRef}\n`))
-            }
-
-            responseBuffer.push(igit.GitPktLine.encode(`unpack ok\n`))
+            buffArr.push(buff)
         }
+        const buff = Buffer.concat(buffArr)
+        this.logging(LogLevel.SILLY, () => "requestBuff:" + buff.toString("hex"))
+        const stream = Readable.from(buff)
+        // dont read direct by streamReader because cannot receive PACK line
+        let readedLength = 0
+        const triplets: any[] = []
+        const read = await igit.GitPktLine.streamReader(stream)
+        let lineBuffer = await read()
+        const READ_SIZE_BYTE = 4 // 4 is size byte
+        while (lineBuffer !== null) {
+            readedLength += lineBuffer.length + READ_SIZE_BYTE
+            const lineStr = lineBuffer.toString("utf8")
+            if (!lineStr) {
+                lineBuffer = await read()
+                continue
+            }
+            const lineData = lineStr.replace("\x00", "").split(" ")
+            const [oldoid, oid, fullRef] = lineData
+            if (lineData.slice(3, lineData.length - 1).length > 0) {
+                capabilities = lineData.slice(3, lineData.length - 1)
+            }
+            triplets.push({ oldoid, oid, fullRef })
+            lineBuffer = await read()
+        }
+        this.logging(LogLevel.DEBUG, "_gitRecievePack capabilities", capabilities)
+
+
+        const getExternalRefDelta = async function (oid: string) {
+            const { type, object } = await igit._readObject({ fs, gitdir, oid })
+            return { type, format: 'content', object }
+        }
+
+        const packbuffer = buff.slice(readedLength + 4)
+        const packedData = await igit.GitPackIndex.fromPack({ pack: packbuffer, getExternalRefDelta })
+
+        for (let oid of packedData.hashes) {
+            const obj = await packedData.read({ oid })
+            await git.writeObject({ fs, gitdir, type: obj.type, object: obj.object })
+        }
+
+        this.logging(LogLevel.DEBUG, "_gitRecievePack triplets", triplets)
+        for (let triplet of triplets) {
+            if ("0000000000000000000000000000000000000000" != triplet.oldoid) {
+                const currentOid = await igit.GitRefManager.resolve({ fs, gitdir, ref: triplet.fullRef })
+                if (currentOid !== triplet.oldoid) {
+                    responseBuffer.push(igit.GitPktLine.encode(`ng ${triplet.fullRef} conflict\n`))
+                    break;
+                }
+            }
+            await igit.GitRefManager.writeRef({ fs, gitdir, ref: triplet.fullRef, value: triplet.oid })
+            responseBuffer.push(igit.GitPktLine.encode(`ok ${triplet.fullRef}\n`))
+        }
+
+        responseBuffer.push(igit.GitPktLine.encode(`unpack ok\n`))
 
         if (capabilities.includes("side-band-64k")) {
             const response = Buffer.concat(responseBuffer.reverse().map(
@@ -261,10 +276,15 @@ function encodeSideBand(channel: number, line: string | Buffer) {
     if (typeof line === 'string') {
         line = Buffer.from(line)
     }
-    const length = line.length + 4 + 1
-    const hexlength = igit.padHex(4, length)
-
-    return Buffer.concat([Buffer.from(hexlength, 'utf8'), Buffer.from([channel]), line])
+    const buffs: Buffer[] = []
+    while (line.length > 0) {
+        const currentLine = line.slice(0, 65518)
+        line = line.slice(65518)
+        const length = currentLine.length + 4 + 1
+        const hexlength = igit.padHex(4, length)
+        buffs.push(Buffer.concat([Buffer.from(hexlength, 'utf8'), Buffer.from([channel]), currentLine]))
+    }
+    return Buffer.concat(buffs)
 }
 
 
