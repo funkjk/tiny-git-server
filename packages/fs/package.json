@@ -3,6 +3,7 @@
   "version": "0.1.24",
   "description": "> TODO: description",
   "license": "ISC",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c ../../rollup.config.js --bundleConfigAsCjs",
