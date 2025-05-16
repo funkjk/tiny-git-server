@@ -2,7 +2,7 @@ import { IncomingMessage, ServerResponse } from "http";
 
 
 //@ts-ignore
-import * as igit from "@funkjk/isomorphic-git/internal-apis"
+import * as igit from "@funkjk/isomorphic-git/internal-apis.js"
 import * as git from "@funkjk/isomorphic-git"
 import * as is from "./identity-request";
 import { GitPktWrite, ObjectEntry } from "./GitPktWrite";

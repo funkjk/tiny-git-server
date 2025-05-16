@@ -1,7 +1,7 @@
 import JSZip from "jszip";
 
 //@ts-ignore
-import * as igit from "@funkjk/isomorphic-git/internal-apis"
+import * as igit from "@funkjk/isomorphic-git/internal-apis.js"
 
 export async function createZip(_fs:any, dir:string) {
     const fs = new igit.FileSystem(_fs)
