@@ -1,4 +1,5 @@
-import * as igit from "@funkjk/tiny-git-server-util"
+//@ts-ignore
+import * as igit from "@funkjk/isomorphic-git/internal-apis"
 
 export interface UploadObjectsList {
   oid: string, type: string, object: any

@@ -1,12 +1,12 @@
 {
   "name": "@funkjk/tiny-git-server-util",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "> TODO: description",
   "license": "ISC",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c ../../rollup.config.js --bundleConfigAsCjs",
-    "test": "node ./__tests__/util.test.js"
+    "test": "jest"
   },
   "directories": {
     "src": "src",
