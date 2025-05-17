@@ -26,9 +26,12 @@
     "@rollup/rollup-win32-x64-msvc": "4.34.8"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "@funkjk/isomorphic-git":"0.0.0-development-patch-for-tiny-git-server",
+    "@funkjk/isomorphic-git": "0.0.0-development-patch-for-tiny-git-server",
     "@funkjk/tiny-git-server-util": "^0.1.20",
+    "@types/pg": "^8.15.2",
+    "pg": "^8.16.0",
+    "rollup-plugin-del": "^1.0.1",
+    "@types/jest": "^29.5.14",
     "async-lock": "^1.4.1",
     "crc-32": "^1.2.2",
     "crc32": "^0.2.2",
@@ -60,7 +63,6 @@
     "release:canary": "lerna publish --canary --preid next --dist-tag next --force-publish='*' --no-push --no-git-tag-version --yes"
   },
   "dependencies": {
-    "rollup-plugin-del": "^1.0.1"
   },
   "repository": {
     "url": "https://github.com/funkjk/tiny-git-server",

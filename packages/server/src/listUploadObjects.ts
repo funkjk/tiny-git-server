@@ -1,5 +1,5 @@
 //@ts-ignore
-import * as igit from "@funkjk/isomorphic-git/internal-apis.js"
+import * as igit from "@funkjk/isomorphic-git/internal-apis.cjs"
 
 export interface UploadObjectsList {
   oid: string, type: string, object: any
