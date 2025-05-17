@@ -1,9 +1,9 @@
 
-import { DataTypes, Op, Sequelize, Transaction, WhereOptions } from "sequelize"
+import { DataTypes, Op, Sequelize, Transaction } from "sequelize"
 import { Model, Optional } from 'sequelize';
 import { Logging } from "@funkjk/tiny-git-server-util";
 import cls from 'cls-hooked'
-import { GitFileType, SQLFS, SqlMeta } from "./sqlfs";
+import { GitFileType, BaseFS, GitFileMeta } from "../base";
 
 export const NAMESPACE_TRANSACTION_NAME = "transaction"
 
@@ -62,7 +62,7 @@ export const SequelizeGitFileDbDefinition = {
 }
 
 
-export class SequelizeSQLFS extends SQLFS{
+export class SequelizeSQLFS extends BaseFS{
     namespace?: cls.Namespace<Record<string, any>>
     FileClass: typeof SequelizeGitFile
     constructor(options: SequelizeSQLFSOptions) {
@@ -87,7 +87,7 @@ export class SequelizeSQLFS extends SQLFS{
     _getTransaction(): Transaction | null {
         return this.namespace?.get(NAMESPACE_TRANSACTION_NAME)
     }
-    async _upsert(row: SqlMeta): Promise<void> {
+    async _upsert(row: GitFileMeta): Promise<void> {
         await this.FileClass.upsert(row, { conflictFields: ["filepath"], transaction: this._getTransaction() })
     }
     async _delete(filepath: string, prematch: boolean): Promise<void> {
@@ -113,7 +113,7 @@ export class SequelizeSQLFS extends SQLFS{
             return null
         }
     }
-    async _selectMetaChild(dir: string): Promise<SqlMeta[]> {
+    async _selectMetaChild(dir: string): Promise<GitFileMeta[]> {
         const row = await this.FileClass.findAll({
             attributes: ["filepath", "fileType", "ctime", "mtime"],
             where: {
@@ -126,7 +126,7 @@ export class SequelizeSQLFS extends SQLFS{
         })
         return row
     }
-    async _selectMeta(filepath: string): Promise<SqlMeta | null> {
+    async _selectMeta(filepath: string): Promise<GitFileMeta | null> {
         const row = await this.FileClass.findOne({
             attributes: ["filepath", "fileType", "ctime", "mtime"],
             where: {

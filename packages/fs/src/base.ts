@@ -5,9 +5,13 @@ export enum GitFileType {
     FILE = "FILE"
 }
 
-export abstract class SQLFS {
+export interface BaseFSOptions {
+    logging?: Logging;
+}
+
+export abstract class BaseFS {
     logging: Logging;
-    constructor(options: { logging?: Logging }) {
+    constructor(options: BaseFSOptions) {
         this.logging = options.logging ?? DefaultLogging
     }
     async readFile(filepath: string, encoding: any): Promise<any> {
@@ -118,6 +122,9 @@ export abstract class SQLFS {
     async symlink(_target: string, _filepath: string): Promise<void> {
         throw new Error("symlink not implemented");
     }
+    toString(): string {
+        return this.constructor.name
+    }
     _getAdditionalCondition(): any {
         return {}
     }
@@ -130,22 +137,22 @@ export abstract class SQLFS {
             mtime: new Date(),
         }
     }
-    abstract _upsert(row: SqlRow): Promise<void>
+    abstract _upsert(row: GitFileRow): Promise<void>
     abstract _delete(filepath: string, prematch: boolean): Promise<void>
     abstract _selectData(filepath: string): Promise<Buffer | null>
-    abstract _selectMetaChild(dir: string): Promise<SqlMeta[]>
-    abstract _selectMeta(filepath: string): Promise<SqlMeta | null>
+    abstract _selectMetaChild(dir: string): Promise<GitFileMeta[]>
+    abstract _selectMeta(filepath: string): Promise<GitFileMeta | null>
 }
 
 
-export interface SqlMeta {
+export interface GitFileMeta {
     filepath: string,
     fileType: GitFileType,
     fileSize?: number,
     ctime?: Date,
     mtime?: Date,
 }
-export interface SqlRow extends SqlMeta {
+export interface GitFileRow extends GitFileMeta {
     data?: Buffer,
 }
 
