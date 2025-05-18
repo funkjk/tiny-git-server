@@ -10,7 +10,7 @@ import { BaseFS } from '../../../packages/fs/src';
 import { NAMESPACE_TRANSACTION_NAME } from '../../../packages/fs/src/sequelize-sqlfs';
 
 
-const ROOT_DIR = "dist/repos"
+export const LOCAL_FS_ROOT_DIR = "dist/repos"
 const logger = createLogger()
 
 export const createGitServer = function (usingFileSystem: BaseFS | any) {
@@ -18,10 +18,10 @@ export const createGitServer = function (usingFileSystem: BaseFS | any) {
     if (usingFileSystem instanceof BaseFS) {
         fileSystemMessage = usingFileSystem.toString()
     } else {
-        fileSystemMessage = "localFileSystem path=" + ROOT_DIR
+        fileSystemMessage = "localFileSystem path=" + LOCAL_FS_ROOT_DIR
     }
     logger.info("usingFileSystem:" + fileSystemMessage)
-    return new GitServer({ fs: usingFileSystem, rootDir: ROOT_DIR, logging: gitServerLogging })
+    return new GitServer({ fs: usingFileSystem, rootDir: LOCAL_FS_ROOT_DIR, logging: gitServerLogging })
 }
 
 
@@ -64,7 +64,7 @@ const gitServe = async function (req: IncomingMessage, res: ServerResponse, gitS
         res.end()
     } else if (pathname == "/download") {
         const repo = url.searchParams.get("repo")
-        const zipped = await createZip(gitServer, ROOT_DIR + "/" + repo)
+        const zipped = await createZip(gitServer.fs, LOCAL_FS_ROOT_DIR + "/" + repo)
         const data = await zipped.generateAsync({ type: "uint8array" });
         const filename = `${repo}_${new Date().toISOString()}.zip`
         res.writeHead(200, "", {

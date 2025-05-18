@@ -17,7 +17,7 @@ export class PgSQLFS extends RawSQLFS {
     async _executeQuery(query: string, params: ParamData[]): Promise<any> {
         try {
             const res = await this.client.query(query, params)
-            return res;
+            return res.rows;
         } catch (err) {
             this.logging(LogLevel.ERROR, "Error executing query:", err)
             throw err;

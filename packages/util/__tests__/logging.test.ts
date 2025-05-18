@@ -25,14 +25,23 @@ test("test logging level", async () => {
 }
 );
 
-test("test logging message function", async () => {
+test("test logging message function not called by level", async () => {
     let executed
-    const logger = createTinyGitLogger(LogLevel.INFO, () => {
+    const logger = createTinyGitLogger(LogLevel.INFO, (level, message) => {
+        expect(level).toBe(LogLevel.WARN);
+        expect(message).toBe("YYY");
     })
     executed = false
-    logger(LogLevel.SILLY, ()=> {
+    logger(LogLevel.SILLY, () => {
         executed = true
         return "XXX"
     })
-    expect(executed).toBe(false);
+})
+
+test("test logging message function called function created message", async () => {
+    const logger = createTinyGitLogger(LogLevel.INFO, (level, message) => {
+        expect(level).toBe(LogLevel.WARN);
+        expect(message).toBe("YYYZZZ");
+    })
+    logger(LogLevel.WARN, () => "YYY" + "ZZZ")
 })
