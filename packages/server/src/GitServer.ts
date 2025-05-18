@@ -75,29 +75,35 @@ export class GitServer {
     }
 
     async handle(gitRequest: is.GitRequest) {
-        this.logging(LogLevel.INFO, `handle ${gitRequest.type} ${gitRequest.repoName}`)
-        const exists = await this._repositoryExists(gitRequest.repoName)
-        if (!exists) {
-            throw new GitServerError(ErrorType.NOT_FOUND, `repository [${gitRequest.repoName}] not found`)
+        this.logging(LogLevel.INFO, `handle start ${gitRequest.type} ${gitRequest.repoName}`)
+        try {
+
+            const exists = await this._repositoryExists(gitRequest.repoName)
+            if (!exists) {
+                throw new GitServerError(ErrorType.NOT_FOUND, `repository [${gitRequest.repoName}] not found`)
+            }
+            let responseBuffer: Buffer
+            switch (gitRequest.type) {
+                case is.RequestType.INFO_RES_RECEIVE:
+                case is.RequestType.INFO_RES_UPLOAD:
+                    responseBuffer = await this._infoRes(gitRequest)
+                    break
+                case is.RequestType.UPLOAD_PACK:
+                    responseBuffer = await this._gitUploadPack(gitRequest)
+                    break
+                case is.RequestType.RECEIVE_PACK:
+                    responseBuffer = await this._gitRecievePack(gitRequest)
+                    break
+                default:
+                    throw new GitServerError(ErrorType.NO_OPERATION, gitRequest.type)
+            }
+            this.logging(LogLevel.DEBUG, `handle end ${gitRequest.type} ${gitRequest.repoName}`)
+            this.logging(LogLevel.SILLY, "response buff:" + responseBuffer.toString("hex"))
+            return responseBuffer
+        } catch (e: any) {
+            this.logging(LogLevel.WARN, "handle error", e)
+            throw e
         }
-        this.logging(LogLevel.DEBUG, `handle ${gitRequest.type} ${gitRequest.repoName}`)
-        let responseBuffer: Buffer
-        switch (gitRequest.type) {
-            case is.RequestType.INFO_RES_RECEIVE:
-            case is.RequestType.INFO_RES_UPLOAD:
-                responseBuffer = await this._infoRes(gitRequest)
-                break
-            case is.RequestType.UPLOAD_PACK:
-                responseBuffer = await this._gitUploadPack(gitRequest)
-                break
-            case is.RequestType.RECEIVE_PACK:
-                responseBuffer = await this._gitRecievePack(gitRequest)
-                break
-            default:
-                throw new GitServerError(ErrorType.NO_OPERATION, gitRequest.type)
-        }
-        this.logging(LogLevel.SILLY, () => "response buff:" + responseBuffer.toString("hex"))
-        return responseBuffer
     }
     async serve(req: IncomingMessage, res: ServerResponse) {
         const gitRequest = is.toGitRequestFromIncomingMessage(req)

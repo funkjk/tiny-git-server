@@ -1,88 +1,40 @@
-import { startServer } from "../src/setup-test"
 import dotenv from 'dotenv'
-const config = dotenv.config().parsed;
-
-import * as git from "@funkjk/isomorphic-git"
-import http from "@funkjk/isomorphic-git/http/node"
+dotenv.config().parsed;
 import fs from 'fs';
-import { namespace, sqlfs } from "../src/setup-git-fs";
+import { namespace } from "../src/setup-git-fs";
+import { cleanup, doIsomorphicGitTest, getRepoName, startServer } from "../src/setup-test"
+import { PgSQLFS } from "../../../packages/fs/src/sql/pg"
+import { sqlfsLogging } from '../src/create-logger';
+import { Client } from 'pg';
 
 const LOCAL_FS_PATH = "dist"
 
-const author = {
-    name: "test",
-    email: "test@example.com"
-}
 
-test("receive_pack_test", async () => {
-    await fetch(`http://localhost:3000/init?repo=${getRepoName()}`, {method: "POST" })
-    await git.clone({ ...getDefaultParams() })
-    fs.writeFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/edit/test.txt", "testdata")
-    await git.add({ ...getDefaultParams(), filepath: "test.txt" })
-    await git.commit({ ...getDefaultParams(), message: "add test", author })
-    await git.push({ ...getDefaultParams() })
-    await git.clone({
-        ...getDefaultParams(),
-        // url:"http://localhost:54321/functions/v1/git-server/funakigitserver_local",
-        // url: "https://github.com/funkjk/testgitserver.git",
-        // url:"https://github.com/funkjk/testgitserver_empty.git",
-        // fs:sqlfs,
-        dir: LOCAL_FS_PATH + "/" + getRepoName() + "/read",
-    })
-    const readText = fs.readFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/read/test.txt")
-    expect(readText.toString("utf8")).toBe("testdata")
-
-
-    fs.writeFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/edit/test.txt", "testdata update")
-    await git.add({ ...getDefaultParams(), filepath: "test.txt" })
-    await git.commit({ ...getDefaultParams(), message: "update test", author })
-    await git.push({ ...getDefaultParams(), force: true })
-
-
-    await git.pull({
-        ...getDefaultParams(),
-        dir: LOCAL_FS_PATH + "/" + getRepoName() + "/read",
-        author
-    })
-    const updatedText = fs.readFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/read/test.txt")
-    expect(updatedText.toString("utf8")).toBe("testdata update")
-
-
-
+test("pg-fs", async () => {
+    await doIsomorphicGitTest(getRepoName())
 }, 30 * 1000)
 
 
 let server: any
 beforeEach(async () => {
-    await cleanup();
+    await cleanup(getRepoName());
 });
 beforeAll(async () => {
     fs.rmSync(LOCAL_FS_PATH, { recursive: true, force: true })
     fs.mkdirSync(LOCAL_FS_PATH)
-    server = await startServer()
+    server = await startServer(pgsqlfs)
+    client.connect()
 });
 afterAll(async () => {
     await server.close()
+    await client.end()
 });
 
 
-async function cleanup() {
-    await namespace.runPromise(async () => {
-        namespace.set("repositoryId", "efe30e56-3e48-b8ef-5500-5941fb97ebe1")
-        await sqlfs.rmdir("examples/repos/" + getRepoName())
-    })
-    fs.rmSync(LOCAL_FS_PATH + "/" + getRepoName(), { recursive: true, force: true })
-}
-function getRepoName() {
-    return expect.getState().currentTestName
-}
-function getDefaultParams() {
-    return {
-        fs,
-        // fs:sqlfs,
-        remoteRef: "main",
-        dir: LOCAL_FS_PATH + "/" + getRepoName() + "/edit",
-        url: `http://localhost:3000/${getRepoName()}`,
-        http
-    }
-}
+
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+})
+const pgsqlfs = new PgSQLFS({
+    logging: sqlfsLogging, namespace, client
+})

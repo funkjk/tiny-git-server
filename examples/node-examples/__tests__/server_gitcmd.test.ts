@@ -4,7 +4,7 @@ dotenv.config().parsed;
 import {spawn} from "child_process"
 
 import fs from 'fs';
-import { namespace, sqlfs } from "../src/setup-git-fs";
+import { LOCAL_FS_ROOT_DIR } from "../src/setup-git-server";
 
 const LOCAL_FS_PATH = "dist"
 
@@ -69,7 +69,7 @@ beforeEach(async () => {
 beforeAll(async () => {
     fs.rmSync(LOCAL_FS_PATH, { recursive: true, force: true })
     fs.mkdirSync(LOCAL_FS_PATH)
-    server = await startServer()
+    server = await startServer(fs)
 });
 afterAll(async () => {
     await server.close()
@@ -77,10 +77,7 @@ afterAll(async () => {
 
 
 async function cleanup() {
-    await namespace.runPromise(async () => {
-        namespace.set("repositoryId", "efe30e56-3e48-b8ef-5500-5941fb97ebe1")
-        await sqlfs.rmdir("examples/repos/" + getRepoName())
-    })
+    fs.rmSync(LOCAL_FS_ROOT_DIR+"/"+getRepoName(), { recursive: true, force: true })
     fs.rmSync(LOCAL_FS_PATH + "/" + getRepoName(), { recursive: true, force: true })
 }
 function getRepoName() {
