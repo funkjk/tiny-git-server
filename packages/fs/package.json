@@ -1,6 +1,6 @@
 {
   "name": "@funkjk/tiny-git-server-fs",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "description": "> TODO: description",
   "license": "ISC",
   "main": "dist/index.js",
@@ -18,6 +18,12 @@
     "dist/sql/pg/",
     "dist/sequelize-sqlfs/"
   ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./sql": "./dist/sql/index.js",
+    "./sql/pg": "./dist/sql/pg/index.js",
+    "./sequelize-sqlfs": "./dist/sequelize-sqlfs/index.js"
+  },
   "devDependencies": {
     "@rollup/plugin-typescript": "^12.1.2",
     "rollup": "^4.34.6",
