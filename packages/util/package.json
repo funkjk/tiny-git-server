@@ -13,9 +13,15 @@
     "test": "__tests__"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "dist/winston/"
   ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./winston": "./dist/winston/index.js"
+  },
   "devDependencies": {
+    "winston": "^3.17.0",
     "@rollup/plugin-typescript": "^12.1.2",
     "rollup": "^4.34.6",
     "rollup-plugin-postcss": "^4.0.2"
