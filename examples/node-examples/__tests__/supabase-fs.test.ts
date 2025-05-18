@@ -1,9 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config().parsed;
-import * as git from "@funkjk/isomorphic-git"
-import http from "@funkjk/isomorphic-git/http/node"
 import fs from 'fs';
-import { namespace, sqlfs } from "../src/setup-git-fs";
+import { sqlfs } from "../src/setup-git-fs";
 import { cleanup, doIsomorphicGitTest, getRepoName, startServer } from "../src/setup-test"
 
 const LOCAL_FS_PATH = "dist"

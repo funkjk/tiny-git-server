@@ -7,6 +7,7 @@ import { createGitServer, serveGitServer } from '../src/setup-git-server';
 import fs from 'fs';
 import { LOCAL_FS_ROOT_DIR } from "../src/setup-git-server";
 import * as git from "@funkjk/isomorphic-git"
+import { Client } from 'pg';
 
 const LOCAL_FS_PATH = "dist"
 
@@ -70,6 +71,12 @@ function getDefaultParams(
 export async function cleanup(reponame:string){
     fs.rmSync(LOCAL_FS_ROOT_DIR+"/"+reponame, { recursive: true, force: true })
     fs.rmSync(LOCAL_FS_PATH + "/" + reponame, { recursive: true, force: true })
+    jest.setTimeout(60000);
+    await sleep(1000)
+
+}
+export function sleep(ms: number = 1000) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export function getRepoName() {
