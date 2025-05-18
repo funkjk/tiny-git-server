@@ -22,7 +22,7 @@
     ".": "./dist/index.js",
     "./sql": "./dist/sql/index.js",
     "./sql/pg": "./dist/sql/pg/index.js",
-    "./sequelize-sqlfs": "./dist/sequelize-sqlfs/index.js",
+    "./sequelize-sqlfs": "./dist/sequelize-sqlfs/index.js"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^12.1.2",
