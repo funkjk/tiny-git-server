@@ -1,6 +1,6 @@
 {
   "name": "@funkjk/tiny-git-server-util",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "> TODO: description",
   "license": "ISC",
   "main": "dist/index.js",
@@ -13,12 +13,18 @@
     "test": "__tests__"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "dist/winston/"
   ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./winston": "./dist/winston/index.js"
+  },
   "devDependencies": {
     "@rollup/plugin-typescript": "^12.1.2",
     "rollup": "^4.34.6",
-    "rollup-plugin-postcss": "^4.0.2"
+    "rollup-plugin-postcss": "^4.0.2",
+    "winston": "^3.17.0"
   },
   "publishConfig": {
     "access": "public"

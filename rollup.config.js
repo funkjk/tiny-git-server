@@ -1,7 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
 import del from 'rollup-plugin-del'
-const { LERNA_PACKAGE_NAME } = process.env
-const packageName = LERNA_PACKAGE_NAME.replace("@tiny-git-server/", "")
 const outputDir = 'dist'
 export default [
   {

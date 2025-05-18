@@ -37,7 +37,6 @@ const withTx = async function (req: IncomingMessage, res: ServerResponse, gitSer
         try {
             await gitServe(req, res, gitServer)
             await tx.commit()
-            logger.info("END")
         } catch (e: any) {
             await tx.rollback()
             if (HTTP_STATUS_BY_ERROR[e.type as ErrorType]) {
