@@ -7,7 +7,6 @@ import { createGitServer, serveGitServer } from '../src/setup-git-server';
 import fs from 'fs';
 import { LOCAL_FS_ROOT_DIR } from "../src/setup-git-server";
 import * as git from "@funkjk/isomorphic-git"
-import { Client } from 'pg';
 
 const LOCAL_FS_PATH = "dist"
 

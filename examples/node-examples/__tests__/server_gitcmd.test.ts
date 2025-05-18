@@ -1,7 +1,8 @@
-import { startServer } from "../src/setup-test"
+import { cleanup, getRepoName, startServer } from "../src/setup-test"
 import dotenv from 'dotenv'
 dotenv.config().parsed;
 import {spawn} from "child_process"
+
 
 import fs from 'fs';
 import { LOCAL_FS_ROOT_DIR } from "../src/setup-git-server";
@@ -64,7 +65,7 @@ function runCommand(commandline:string, cwd?:string) {
 
 let server: any
 beforeEach(async () => {
-    await cleanup();
+    await cleanup(getRepoName());
 });
 beforeAll(async () => {
     fs.rmSync(LOCAL_FS_PATH, { recursive: true, force: true })
@@ -74,12 +75,3 @@ beforeAll(async () => {
 afterAll(async () => {
     await server.close()
 });
-
-
-async function cleanup() {
-    fs.rmSync(LOCAL_FS_ROOT_DIR+"/"+getRepoName(), { recursive: true, force: true })
-    fs.rmSync(LOCAL_FS_PATH + "/" + getRepoName(), { recursive: true, force: true })
-}
-function getRepoName() {
-    return expect.getState().currentTestName
-}
