@@ -98,7 +98,7 @@ export class GitServer {
                     throw new GitServerError(ErrorType.NO_OPERATION, gitRequest.type)
             }
             this.logging(LogLevel.DEBUG, `handle end ${gitRequest.type} ${gitRequest.repoName}`)
-            this.logging(LogLevel.SILLY, "response buff:" + responseBuffer.toString("hex"))
+            this.logging(LogLevel.SILLY, () => "response buff:" + responseBuffer.toString("hex"))
             return responseBuffer
         } catch (e: any) {
             this.logging(LogLevel.WARN, "handle error", e)
