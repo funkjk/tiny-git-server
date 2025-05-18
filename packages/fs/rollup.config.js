@@ -5,7 +5,12 @@ import del from 'rollup-plugin-del'
 const outputDir = 'dist'
 export default [
   {
-    input: ['./src/base.ts','./src/sql/index.ts','./src/sql/pg/index.ts','./src/sequelize-sqlfs/index.ts'],
+    input: {
+      "index": './src/base.ts',
+      "sql/index": './src/sql/index.ts',
+      "sql/pg/index": './src/sql/pg/index.ts',
+      "sequelize-sqlfs/index": './src/sequelize-sqlfs/index.ts'
+    },
     output: {
       format: "cjs",
       dir: outputDir,
