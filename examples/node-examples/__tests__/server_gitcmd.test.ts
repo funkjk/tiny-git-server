@@ -19,7 +19,7 @@ test("receive_pack_test_gitcmd", async () => {
 
     fs.writeFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/edit/test.txt", "testdata")
     await runCommand(`git add test.txt`, editRepoPath)
-    await runCommand(`git commit -m 'addtest'`, editRepoPath)
+    await runCommand(`git -c user.name='foobar' -c user.email='foobar@example.com' commit -m 'addtest'`, editRepoPath)
     await runCommand(`git push`, editRepoPath)
 
     await runCommand(`git clone http://localhost:3000/${getRepoName()} ${readRepoPath}`, ".")
@@ -30,7 +30,7 @@ test("receive_pack_test_gitcmd", async () => {
 
     fs.writeFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/edit/test.txt", "testdata update")
     await runCommand(`git add test.txt`, editRepoPath)
-    await runCommand(`git commit -m 'updatetest'`, editRepoPath)
+    await runCommand(`git -c user.name='foobar' -c user.email='foobar@example.com' commit -m 'updatetest'`, editRepoPath)
     await runCommand(`git push`, editRepoPath)
 
     await runCommand(`git pull`, readRepoPath)
