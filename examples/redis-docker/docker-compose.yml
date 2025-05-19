@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  service_redis:
+    image: redis:8.0.1
+    container_name: container_redis
+    ports: 
+      - "6379:6379"
+    volumes:
+      - volume_data:/data
+
+
+volumes:
+  volume_data:
+    name: vredis

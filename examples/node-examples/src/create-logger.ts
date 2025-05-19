@@ -6,10 +6,9 @@ const debugLogEnable = process.env.DEBUG_LOG !== "true"
 
 const LEVELS_BY_CATEGORY: any = {
     "main": "info",
-    // "sql": debugLogEnable ? "silly" : undefined,
-    // "sqlfs": debugLogEnable ? "silly" : undefined,
-    // "GitServer": debugLogEnable ? "silly" : undefined,
-    // "GitServer": "silly",
+    "sql": debugLogEnable ? "silly" : undefined,
+    "sqlfs": debugLogEnable ? "silly" : "silly" ,
+    "GitServer": debugLogEnable ? "silly" : "silly" ,
 }
 
 export function createLogger(args?: { category?: string }) {

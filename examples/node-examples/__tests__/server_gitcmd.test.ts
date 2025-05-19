@@ -5,7 +5,6 @@ import {spawn} from "child_process"
 
 
 import fs from 'fs';
-import { LOCAL_FS_ROOT_DIR } from "../src/setup-git-server";
 
 const LOCAL_FS_PATH = "dist"
 
@@ -15,14 +14,14 @@ test("receive_pack_test_gitcmd", async () => {
     const editRepoPath = `${LOCAL_FS_PATH}/${getRepoName()}/edit`
     const readRepoPath = `${LOCAL_FS_PATH}/${getRepoName()}/read`
 
-    await runCommand(`git clone http://localhost:3000/${getRepoName()} ${editRepoPath}`, ".")
+    await runCommand(`git -c init.defaultBranch=main clone http://localhost:3000/${getRepoName()} ${editRepoPath}`, ".")
 
     fs.writeFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/edit/test.txt", "testdata")
     await runCommand(`git add test.txt`, editRepoPath)
-    await runCommand(`git commit -m 'addtest'`, editRepoPath)
+    await runCommand(`git -c user.name='foobar' -c user.email='foobar@example.com' commit -m 'addtest'`, editRepoPath)
     await runCommand(`git push`, editRepoPath)
 
-    await runCommand(`git clone http://localhost:3000/${getRepoName()} ${readRepoPath}`, ".")
+    await runCommand(`git -c init.defaultBranch=main clone http://localhost:3000/${getRepoName()} ${readRepoPath}`, ".")
 
     const readText = fs.readFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/read/test.txt")
     expect(readText.toString("utf8")).toBe("testdata")
@@ -30,7 +29,7 @@ test("receive_pack_test_gitcmd", async () => {
 
     fs.writeFileSync(LOCAL_FS_PATH + "/" + getRepoName() + "/edit/test.txt", "testdata update")
     await runCommand(`git add test.txt`, editRepoPath)
-    await runCommand(`git commit -m 'updatetest'`, editRepoPath)
+    await runCommand(`git -c user.name='foobar' -c user.email='foobar@example.com' commit -m 'updatetest'`, editRepoPath)
     await runCommand(`git push`, editRepoPath)
 
     await runCommand(`git pull`, readRepoPath)
