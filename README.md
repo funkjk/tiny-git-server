@@ -23,10 +23,7 @@ For examples, OAS definition, or configuration json file.
 ```bash
 tiny-git-server>npm install
 tiny-git-server>npm run build
-tiny-git-server>cp -r packages/util/dist/* node_modules/@funkjk/tiny-git-server-util/dist/
-tiny-git-server>cd examples/node-examples
-node-examples>npm install
-node-examples>USE_SQLFS=false npm run dev
+tiny-git-server>USE_SQLFS=false npm run dev
 usingFileSystem:localFileSystem path=dist/repos
 2025-05-07 14:59:26 main info: start server port 3000 
 ```
