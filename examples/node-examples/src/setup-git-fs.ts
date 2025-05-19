@@ -4,6 +4,7 @@ import { SequelizeGitFile, SequelizeGitFileDbDefinition, SequelizeSQLFS } from '
 import { DataTypes, Sequelize } from 'sequelize'
 import cls from 'cls-hooked'
 import { sqlfsLogging, sqlLogger } from './create-logger';
+import { LOCAL_FS_ROOT_DIR } from './setup-git-server';
 
 export const namespace = cls.createNamespace('sequelize-transaction');
 
@@ -22,6 +23,7 @@ class RepositoryIdFileClass extends SequelizeGitFile {
 }
 
 export const sqlfs = new SequelizeSQLFS({
+    rootDir: LOCAL_FS_ROOT_DIR,
     logging: sqlfsLogging, namespace, sequelize,
     gitFileDbDefinition: {
         repositoryId: {

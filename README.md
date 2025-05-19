@@ -2,6 +2,8 @@
 
 Pure JavaScript GitServer which has few features.
 
+This library can store repository data to sevrarl storage such as DB or redis and so on.
+This library can run on servrarl enviroment such as vercel or firebase and so on.
 
 
 ## Demo

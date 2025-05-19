@@ -1,14 +1,12 @@
 
 import { DataTypes, Op, Sequelize, Transaction } from "sequelize"
 import { Model, Optional } from 'sequelize';
-import { Logging } from "@funkjk/tiny-git-server-util";
 import cls from 'cls-hooked'
-import { GitFileType, BaseFS, GitFileMeta } from "../base";
+import { GitFileType, BaseFS, GitFileMeta, BaseFSOptions } from "../base";
 
 export const NAMESPACE_TRANSACTION_NAME = "transaction"
 
-export interface SequelizeSQLFSOptions {
-    logging?: Logging;
+export interface SequelizeSQLFSOptions extends BaseFSOptions {
     namespace?: cls.Namespace<Record<string, any>>;
     FileClass?: typeof SequelizeGitFile;
     gitFileDbDefinition?: any
