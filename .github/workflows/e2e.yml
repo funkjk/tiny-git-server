@@ -17,5 +17,7 @@ jobs:
         run: npm run build
       - name: start docker
         run: cd examples/postgresql-docker && docker compose up -d
+      - name: start docker
+        run: cd examples/redis-docker && docker compose up -d
       - name: Build
         run: npm run test
